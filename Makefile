@@ -1,7 +1,7 @@
 CC = g++
 
 CFLAGS = -Wall -c
-LFLAGS = 
+LFLAGS = -lglfw
 
 
 PRODUCT = derelict
@@ -22,7 +22,7 @@ OBJECTS = $(SOURCES:.cpp=.o)
 
 
 MACCFLAGS = 
-MACLFLAGS = -framework OpenGL -framework GLUT -framework Cocoa
+MACLFLAGS = -framework OpenGL -framework Cocoa
 
 MACBUILDDIR   = $(BUILDDIR)mac/
 
