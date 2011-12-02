@@ -10,6 +10,7 @@
 #include <GL/glfw.h>
 
 #include "Key.h"
+#include "Cam.h"
 
 void Init() {
 	glClearColor(1, 1, 1, 0);
@@ -27,6 +28,7 @@ int main(int argc, char ** argv) {
 	Init();
 
 	glfwSetKeyCallback(Key::KeyEvent);
+	glfwSetWindowSizeCallback(Cam::ResizeCallback);
 
 	bool running = true;
 
