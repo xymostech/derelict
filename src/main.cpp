@@ -9,6 +9,8 @@
 #include <iostream>
 #include <GL/glfw.h>
 
+#include "Key.h"
+
 void Init() {
 	glClearColor(1, 1, 1, 0);
 }
@@ -17,13 +19,14 @@ void Display() {
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 }	
 
-
 int main(int argc, char ** argv) {
 	glfwInit();
 
 	glfwOpenWindow(800, 600, 0, 0, 0, 0, 16, 0, GLFW_WINDOW);
 
 	Init();
+
+	glfwSetKeyCallback(Key::KeyEvent);
 
 	bool running = true;
 
