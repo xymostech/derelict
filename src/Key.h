@@ -20,7 +20,9 @@ public:
 
 	static void GLFWCALL KeyEvent(int key, int action);
 
-	bool Pressed(int key);
+	bool Pressed(int key, int flags);
+
+	void Update();
 };
 
 #endif

@@ -1,65 +1,87 @@
+# Compiler
 CC = g++
 
+# Flags
 CFLAGS = -Wall -c
 LFLAGS = -lglfw
+TESTLFLAGS = -lUnitTest++
 
-
-PRODUCT = derelict
-
-
+# directories
 SRCDIR = src/
 RESOURCEDIR = res/
-
 BUILDDIR   = build/
-
 OBJDIR     = obj/
 PRODUCTDIR = product/
 
+# file lists
+SOURCES     = $(notdir $(wildcard src/*.cpp))
+HEADERS     = $(notdir $(wildcard src/*.h))
+OBJECTS     = $(filter-out Test%, $(SOURCES:.cpp=.o))
+TESTOBJECTS = $(filter-out main.o,$(SOURCES:.cpp=.o))
 
-SOURCES = $(notdir $(wildcard src/*.cpp))
-HEADERS = $(notdir $(wildcard src/*.h))
-OBJECTS = $(SOURCES:.cpp=.o)
+# Final products
+PRODUCT = derelict
+TESTPRODUCT = test
 
+# Mac specific options
 
-MACCFLAGS = 
+# Extra flags
+MACCFLAGS =
 MACLFLAGS = -framework OpenGL -framework Cocoa
 
+# Directories
 MACBUILDDIR   = $(BUILDDIR)mac/
-
 MACOBJDIR     = $(MACBUILDDIR)$(OBJDIR)
 MACPRODUCTDIR = $(MACBUILDDIR)$(PRODUCTDIR)
 
+# File lists
+MACOBJECTS     = $(addprefix $(MACOBJDIR), $(OBJECTS))
+MACTESTOBJECTS = $(addprefix $(MACOBJDIR), $(TESTOBJECTS))
+
+# Final products
 MACPRODUCT = $(MACOBJDIR)$(PRODUCT)
-MACAPP     = $(MACPRODUCTDIR)$(PRODUCT).app
+MACAPP     = $(MACPRODUCTDIR)$(PRODUCT).app/
+MACTEST    = $(MACOBJDIR)$(TESTPRODUCT)
+
+# Colors for output
+NO_COLOR=\x1b[0m
+CYAN_COLOR=\x1b[1;36;01m
+GREEN_COLOR=\x1b[32;01m
+RED_COLOR=\x1b[31;01m
 
 
-MACOBJECTS = $(addprefix $(MACOBJDIR), $(OBJECTS))
-
-.PHONY: all
-all: macprod
+.PHONY: mac
+mac: $(MACAPP) $(MACTEST)
 
 .PHONY: clean
 clean:
+	@echo "$(GREEN_COLOR)Cleaning$(NO_COLOR) build/"
 	@-rm -rf $(BUILDDIR)
 
-.PHONY: macprod
-macprod: $(MACAPP)
-
 $(MACAPP): $(MACPRODUCT) | $(MACPRODUCTDIR)
-	mkdir -p $(MACAPP)
-	mkdir -p $(MACAPP)/Contents
-	sed s/@PROD/$(PRODUCT)/ <$(RESOURCEDIR)Info.plist >$(MACAPP)/Contents/Info.plist
-	mkdir -p $(MACAPP)/Contents/MacOS
-	cp $(MACPRODUCT) $(MACAPP)/Contents/MacOS/
-	mkdir -p $(MACAPP)/Contents/Resources
-	mkdir -p $(MACAPP)/Contents/Resources/English.lproj
-	cp $(RESOURCEDIR)MainMenu.xib $(MACAPP)/Contents/Resources/English.lproj/
+	@echo "$(GREEN_COLOR)Building$(NO_COLOR) $(PRODUCT).app"
+	@mkdir -p $(MACAPP)
+	@mkdir -p $(MACAPP)Contents
+	@sed s/@PROD/$(PRODUCT)/ <$(RESOURCEDIR)Info.plist >$(MACAPP)Contents/Info.plist
+	@mkdir -p $(MACAPP)Contents/MacOS
+	@cp $(MACPRODUCT) $(MACAPP)Contents/MacOS/
+	@mkdir -p $(MACAPP)Contents/Resources
+	@mkdir -p $(MACAPP)Contents/Resources/English.lproj
+	@cp $(RESOURCEDIR)MainMenu.xib $(MACAPP)Contents/Resources/English.lproj/
+
+$(MACTEST): $(MACTESTOBJECTS) | $(MACOBJDIR)
+	@echo "$(GREEN_COLOR)Building$(NO_COLOR) tests"
+	@$(CC) $(LFLAGS) $(MACLFLAGS) $(TESTLFLAGS) $^ -o $@
+	@echo "$(RED_COLOR)Running$(NO_COLOR) tests"
+	@./$(MACTEST)
 
 $(MACPRODUCT): $(MACOBJECTS) | $(MACOBJDIR)
-	$(CC) $(LFLAGS) $(MACLFLAGS) $^ -o $@
+	@echo "$(GREEN_COLOR)Building$(NO_COLOR) $(PRODUCT)"
+	@$(CC) $(LFLAGS) $(MACLFLAGS) $^ -o $@
 
 $(MACOBJDIR)%.o: $(addprefix $(SRCDIR), %.cpp) $(addprefix $(SRCDIR), $(HEADERS)) | $(MACOBJDIR)
-	$(CC) $(CFLAGS) $(MACCFLAGS) $< -o $@
+	@echo "$(CYAN_COLOR)Compiling$(NO_COLOR) $(notdir $@)"
+	@$(CC) $(CFLAGS) $(MACCFLAGS) $< -o $@
 
 $(MACOBJDIR) $(MACPRODUCTDIR):
-	mkdir -p $@
+	@mkdir -p $@

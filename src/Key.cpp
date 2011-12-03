@@ -40,9 +40,13 @@ void Key::KeyEvent(int key, int action) {
 		std::cout<<key<<" ("<<(char)key<<") released"<<std::endl;
 }
 
-bool Key::Pressed(int key) {
+bool Key::Pressed(int key, int flags) {
 	int special = !!(key&GLFW_KEY_SPECIAL);
 	key &= GLFW_KEY_SPECIAL-1;
 	return I().keys_[0][special][key] ||
 	       (special?false:I().keys_[0][0][caps_[key]]);
+}
+
+void Key::Update() {
+
 }
