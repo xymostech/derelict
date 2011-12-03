@@ -18,6 +18,9 @@ void Init() {
 
 void Display() {
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+
+	glBegin(GL_TRIANGLE_STRIP);
+		glVertex3f(
 }	
 
 int main(int argc, char ** argv) {
