@@ -26,6 +26,22 @@ void Display() {
 		glVertex2f(1,  0);
 		glVertex2f( 0, 1);
 	glEnd();
+
+	glColor3f(1, 0, 0);
+
+	glBegin(GL_TRIANGLE_STRIP);
+		glVertex3f( 0, 0, 1);
+		glVertex3f( 1, 0, 1);
+		glVertex3f( 0, 1, 1);
+	glEnd();
+
+	glColor3f(0, 1, 0);
+
+	glBegin(GL_TRIANGLE_STRIP);
+		glVertex3f( 0, 0, 2);
+		glVertex3f( 1, 0, 2);
+		glVertex3f( 0, 1, 2);
+	glEnd();
 }
 
 void Update() {
@@ -44,6 +60,9 @@ int main(int argc, char ** argv) {
 	glfwInit();
 
 	glfwOpenWindow(800, 600, 0, 0, 0, 0, 16, 0, GLFW_WINDOW);
+
+	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LESS);
 
 	Init();
 
