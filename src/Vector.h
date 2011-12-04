@@ -3,8 +3,6 @@
 
 #include <cmath>
 
-#include <Box2D/Box2D.h>
-
 class Vector
 {
 public:
@@ -31,8 +29,6 @@ public:
 	
 	float Len() const;
 	Vector Norm() const;
-	
-	b2Vec2 b2() const;
 };
 
 #endif

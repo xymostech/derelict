@@ -77,7 +77,3 @@ Vector Vector::Norm() const
 	return *this/Len();
 }
 
-b2Vec2 Vector::b2() const
-{
-	return b2Vec2(i,j);
-}
