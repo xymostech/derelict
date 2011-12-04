@@ -19,7 +19,26 @@ void Init() {
 void Display() {
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 
-}	
+	glColor3f(0, 0, 0);
+	
+	glBegin(GL_TRIANGLE_STRIP);
+		glVertex2f( 0,  0);
+		glVertex2f(1,  0);
+		glVertex2f( 0, 1);
+	glEnd();
+}
+
+void Update() {
+	if(Key::I().Pressed('D')) {
+		Vector pos = Cam::I().GetPos();
+		pos.i += 0.1;
+		Cam::I().SetPos(pos);
+	} else if(Key::I().Pressed('A')) {
+		Vector pos = Cam::I().GetPos();
+		pos.i -= 0.1;
+		Cam::I().SetPos(pos);
+	}
+}
 
 int main(int argc, char ** argv) {
 	glfwInit();
@@ -36,10 +55,15 @@ int main(int argc, char ** argv) {
 	while(running) {
 		Display();
 
+		Update();
+		Key::I().Update();
+
 		glfwSwapBuffers();
 
 		running = !glfwGetKey(GLFW_KEY_ESC) &&
 		          glfwGetWindowParam(GLFW_OPENED);
+		
+		glfwSleep(0.01);
 	}
 
 	glfwCloseWindow();
