@@ -21,10 +21,11 @@ class Cam {
 	void operator=(const Cam&);
 	
 	int screen_size_[2];
-	int zoom_;
+	float zoom_;
 	Vector pos_;
 
-	void Setup();
+	void SetupProjection();
+	void SetupView();
 public:
 	static Cam& I();
 
@@ -37,6 +38,9 @@ public:
 
 	void SetZoom(float zoom);
 	void SetPos(Vector pos);
+
+	float  GetZoom();
+	Vector GetPos();
 };
 
 #endif

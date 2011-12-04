@@ -6,7 +6,7 @@ Cam::Cam() :
 	screen_size_[0] = screen_size_[1] = 0;
 }
 
-void Cam::Setup() {
+void Cam::SetupProjection() {
 	glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
 		glViewport(0, 0, Width(), Height());
@@ -14,9 +14,16 @@ void Cam::Setup() {
 			     HalfWidth()/100.0,
 			  -1*HalfHeight()/100.0,
 			     HalfHeight()/100.0,
-			  0.1/zoom_, 100);
+			  1.0/zoom_, 100);
+	glMatrixMode(GL_MODELVIEW);
+}
+
+void Cam::SetupView() {
 	glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
+		gluLookAt(pos_.i, pos_.j, -1,
+		          pos_.i, pos_.j,  0,
+			  0,      1,       0);
 }
 
 Cam& Cam::I() {
@@ -28,7 +35,8 @@ void GLFWCALL Cam::ResizeCallback(int width, int height) {
 	I().screen_size_[0] = width;
 	I().screen_size_[1] = height;
 
-	I().Setup();
+	I().SetupProjection();
+	I().SetupView();
 }
 
 int Cam::Width() {
@@ -49,8 +57,20 @@ int Cam::HalfHeight() {
 
 void Cam::SetZoom(float zoom) {
 	zoom_ = zoom;
+
+	SetupProjection();
 }
 
 void Cam::SetPos(Vector pos) {
 	pos_ = pos;
+
+	SetupView();
+}
+
+float Cam::GetZoom() {
+	return zoom_;
+}
+
+Vector Cam::GetPos() {
+	return pos_;
 }
