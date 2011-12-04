@@ -1,3 +1,10 @@
+/*
+ * Key class
+ *
+ * Handles callbacks from keypresses and stores
+ * them so they can be accessed later
+ */
+
 #ifndef KEY_H
 #define KEY_H
 
