@@ -2,28 +2,52 @@
 
 #include "Key.h"
 
-TEST(KeyPressTest) {
+TEST(KeyPress) {
 	Key::KeyEvent('A', GLFW_PRESS);
-
-	CHECK(Key::I().Pressed('A', 0));
+	CHECK(Key::I().Pressed('A'));
 
 	Key::KeyEvent('A', GLFW_RELEASE);
-
-	CHECK(!Key::I().Pressed('A', 0));
+	CHECK(!Key::I().Pressed('A'));
 }
 
-TEST(KeyCapsTest) {
+TEST(KeyCaps) {
 	Key::KeyEvent('A', GLFW_PRESS);
-	
-	CHECK(Key::I().Pressed('a', 0));
+	CHECK(Key::I().Pressed('a'));
 
 	Key::KeyEvent('A', GLFW_RELEASE);
-
-	CHECK(!Key::I().Pressed('a', 0));
-
-	Key::KeyEvent('1', GLFW_PRESS);
-
-	CHECK(!Key::I().Pressed('!', 0));
+	CHECK(!Key::I().Pressed('a'));
 
 	Key::KeyEvent('1', GLFW_PRESS);
+	CHECK(!Key::I().Pressed('!'));
+
+	Key::KeyEvent('1', GLFW_PRESS);
+}
+
+TEST(KeyState) {
+	Key::KeyEvent('A', GLFW_RELEASE);
+	Key::I().Update();
+	CHECK(!Key::I().Pressed('A', Key::PRESSED));
+	CHECK( Key::I().Pressed('A', Key::RELEASED));
+	CHECK(!Key::I().Pressed('A', Key::EDGE));
+	CHECK( Key::I().Pressed('A', Key::HELD));
+
+	Key::KeyEvent('A', GLFW_PRESS);
+	CHECK( Key::I().Pressed('A', Key::PRESSED));
+	CHECK(!Key::I().Pressed('A', Key::RELEASED));
+	CHECK( Key::I().Pressed('A', Key::EDGE));
+	CHECK(!Key::I().Pressed('A', Key::HELD));
+
+	Key::I().Update();
+	CHECK( Key::I().Pressed('A', Key::PRESSED));
+	CHECK(!Key::I().Pressed('A', Key::RELEASED));
+	CHECK(!Key::I().Pressed('A', Key::EDGE));
+	CHECK( Key::I().Pressed('A', Key::HELD));
+
+	Key::KeyEvent('A', GLFW_RELEASE);
+	CHECK(!Key::I().Pressed('A', Key::PRESSED));
+	CHECK( Key::I().Pressed('A', Key::RELEASED));
+	CHECK( Key::I().Pressed('A', Key::EDGE));
+	CHECK(!Key::I().Pressed('A', Key::HELD));
+
+	Key::I().Update();
 }

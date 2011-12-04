@@ -1,6 +1,6 @@
 #include "Key.h"
 
-const unsigned char Key::caps_[128] = {
+const int Key::caps_[128] = {
 	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -28,25 +28,50 @@ Key& Key::I() {
 	return instance;
 }
 
+bool Key::KeyCheck(int past, int special, int key) {
+	if(special) {
+		return keys_[past][1][key];
+	} else {
+		if((key >= 'A' && key <= 'Z') ||
+		   (key >= 'a' && key <= 'z')) {
+			return keys_[past][0][key] ||
+			       keys_[past][0][caps_[key]];
+		} else {
+			return keys_[past][0][key] ||
+			       (keys_[past][0][caps_[key]] &&
+			        (keys_[past][1][GLFW_KEY_LSHIFT-GLFW_KEY_SPECIAL] ||
+				 keys_[past][1][GLFW_KEY_RSHIFT-GLFW_KEY_SPECIAL]));
+		}
+	}
+}
+
 void Key::KeyEvent(int key, int action) {
 	int special = !!(key&GLFW_KEY_SPECIAL);
 	key &= GLFW_KEY_SPECIAL-1;
 
 	I().keys_[0][special][key] = action;
-
-	if(action == GLFW_PRESS)
-		std::cout<<key<<" ("<<(char)key<<") pressed"<<std::endl;
-	else
-		std::cout<<key<<" ("<<(char)key<<") released"<<std::endl;
 }
 
 bool Key::Pressed(int key, int flags) {
 	int special = !!(key&GLFW_KEY_SPECIAL);
 	key &= GLFW_KEY_SPECIAL-1;
-	return I().keys_[0][special][key] ||
-	       (special?false:I().keys_[0][0][caps_[key]]);
+	bool pressed = true;
+
+	if(flags & PRESSED) {
+		pressed &= KeyCheck(0, special, key);
+	} else if(flags & RELEASED) {
+		pressed &= !KeyCheck(0, special, key);
+	} else if(flags & HELD) {
+		pressed &= (KeyCheck(0, special, key) ==
+		            KeyCheck(1, special, key));
+	} else if(flags & EDGE) {
+		pressed &= (KeyCheck(0, special, key) !=
+		            KeyCheck(1, special, key));
+	}
+
+	return pressed;
 }
 
 void Key::Update() {
-
+	memcpy(keys_[1], keys_[0], 256);
 }
