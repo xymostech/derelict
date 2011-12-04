@@ -90,6 +90,12 @@ void Pyramid() {
 		glVertex3f(0, -.25, -.433);
 	glEnd();
 
+	glBegin(GL_TRIANGLES);
+		glVertex3f(0, -.25, -.433);
+		glVertex3f(-.375, -.25, .2165);
+		glVertex3f( .375, -.25, .2165);
+	glEnd();
+
 	glColor3f(1, 1, 1);
 
 	glBegin(GL_LINES);
@@ -100,6 +106,12 @@ void Pyramid() {
 		glVertex3f(-.375, -.25, .2165);
 
 		glVertex3f(0, 0.5, 0);
+		glVertex3f( .375, -.25, .2165);
+	glEnd();
+
+	glBegin(GL_LINE_LOOP);
+		glVertex3f(0, -.25, -.433);
+		glVertex3f(-.375, -.25, .2165);
 		glVertex3f( .375, -.25, .2165);
 	glEnd();
 }
