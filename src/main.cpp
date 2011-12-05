@@ -11,6 +11,9 @@
 
 #include "Key.h"
 #include "Cam.h"
+#include "Player.h"
+
+Player p;
 
 void Init() {
 	glClearColor(1, 1, 1, 0);
@@ -121,7 +124,15 @@ void Display() {
 
 	glColor3f(0, 0, 0);
 
-	Cube();
+	glPushMatrix();
+
+	glTranslatef(p.GetPos().i,
+	             p.GetPos().j,
+		     0);
+
+	Pyramid();
+
+	glPopMatrix();
 
 	glPushMatrix();
 
@@ -138,40 +149,48 @@ void Display() {
 	Cube();
 
 	glPopMatrix();
-	
-	//glBegin(GL_TRIANGLE_STRIP);
-		//glVertex2f( 0,  0);
-		//glVertex2f(1,  0);
-		//glVertex2f( 0, 1);
-	//glEnd();
 
-	//glColor3f(1, 0, 0);
 
-	//glBegin(GL_TRIANGLE_STRIP);
-		//glVertex3f( 0, 0, 1);
-		//glVertex3f( 1, 0, 1);
-		//glVertex3f( 0, 1, 1);
-	//glEnd();
+	for(int i=-10; i<=10; ++i) {
+		glPushMatrix();
 
-	//glColor3f(0, 1, 0);
+		glTranslatef(i/2.0, -.5, 0.5);
 
-	//glBegin(GL_TRIANGLE_STRIP);
-		//glVertex3f( 0, 0, 2);
-		//glVertex3f( 1, 0, 2);
-		//glVertex3f( 0, 1, 2);
-	//glEnd();
+		glColor3f(0.2, 0.2, 0.2);
+
+		Cube();
+
+		glTranslatef(0, 0, -0.5);
+
+		glColor3f(0.2, 0.2, 0.2);
+
+		Cube();
+
+		glTranslatef(0, 0, -0.5);
+
+		glColor3f(0.2, 0.2, 0.2);
+
+		Cube();
+
+		glPopMatrix();
+	}
 }
 
 void Update() {
 	if(Key::I().Pressed('D')) {
-		Vector pos = Cam::I().GetPos();
-		pos.i -= 0.1;
-		Cam::I().SetPos(pos);
+		p.Right();
 	} else if(Key::I().Pressed('A')) {
-		Vector pos = Cam::I().GetPos();
-		pos.i += 0.1;
-		Cam::I().SetPos(pos);
+		p.Left();
 	}
+
+	if(Key::I().Pressed('W') &&
+	   p.OnGround()) {
+		p.Jump();
+	}
+
+	p.Update();
+
+	Cam::I().SetPos(p.GetPos());
 }
 
 int main(int argc, char ** argv) {
