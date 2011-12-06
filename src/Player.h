@@ -1,6 +1,8 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
+#include "Key.h"
+
 #include "Vector.h"
 
 class Player {
