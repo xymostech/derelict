@@ -54,7 +54,7 @@ RED_COLOR=\x1b[31;01m
 
 
 .PHONY: mac
-mac: $(MACAPP) $(MACTEST)
+mac: $(MACAPP)/.build $(MACTEST)
 
 .PHONY: clean
 clean:
@@ -63,9 +63,10 @@ clean:
 	@echo "$(GREEN_COLOR)Cleaning$(NO_COLOR) UnitTest++"
 	@cd $(dir $(TESTLIB)); make clean
 
-$(MACAPP): $(MACPRODUCT) | $(MACPRODUCTDIR)
+$(MACAPP)/.build: $(MACPRODUCT) | $(MACPRODUCTDIR)
 	@echo "$(GREEN_COLOR)Building$(NO_COLOR) $(PRODUCT).app"
 	@mkdir -p $(MACAPP)/
+	@touch $(MACAPP)/.build
 	@mkdir -p $(MACAPP)/Contents
 	@sed s/@PROD/$(PRODUCT)/ <$(RESOURCEDIR)Info.plist >$(MACAPP)/Contents/Info.plist
 	@mkdir -p $(MACAPP)/Contents/MacOS
