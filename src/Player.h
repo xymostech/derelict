@@ -20,6 +20,7 @@ public:
 	bool OnGround();
 
 	void Update();
+	void HandleControls();
 };
 
 #endif

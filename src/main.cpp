@@ -177,16 +177,7 @@ void Display() {
 }
 
 void Update() {
-	if(Key::I().Pressed('D')) {
-		p.Right();
-	} else if(Key::I().Pressed('A')) {
-		p.Left();
-	}
-
-	if(Key::I().Pressed('W') &&
-	   p.OnGround()) {
-		p.Jump();
-	}
+	p.HandleControls();
 
 	p.Update();
 

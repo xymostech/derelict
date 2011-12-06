@@ -38,3 +38,16 @@ void Player::Update() {
 		on_ground_ = false;
 	}
 }
+
+void Player::HandleControls() {
+	if(Key::I().Pressed('D')) {
+		Right();
+	} else if(Key::I().Pressed('A')) {
+		Left();
+	}
+
+	if(Key::I().Pressed('W') &&
+	   OnGround()) {
+		Jump();
+	}
+}
