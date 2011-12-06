@@ -60,6 +60,9 @@ mac: $(MACAPP)/.build $(MACTEST)
 clean:
 	@echo "$(GREEN_COLOR)Cleaning$(NO_COLOR) build/"
 	@-rm -rf $(BUILDDIR)
+
+.PHONY: clean-all
+clean-all: clean
 	@echo "$(GREEN_COLOR)Cleaning$(NO_COLOR) UnitTest++"
 	@cd $(dir $(TESTLIB)); make clean
 
