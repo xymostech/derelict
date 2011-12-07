@@ -12,10 +12,11 @@
 #include "Key.h"
 #include "Cam.h"
 #include "Player.h"
+#include "World.h"
 
 #include "DisplayFuncs.h"
 
-Player p;
+World w;
 
 void Init() {
 	glClearColor(1, 1, 1, 0);
@@ -24,7 +25,7 @@ void Init() {
 void Display() {
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 
-	p.Draw();
+	w.Draw();
 
 	glPushMatrix();
 
@@ -69,11 +70,9 @@ void Display() {
 }
 
 void Update() {
-	p.HandleControls();
+	w.Update();
 
-	p.Update();
-
-	Cam::I().SetPos(p.GetPos());
+	//Cam::I().SetPos(p.GetPos());
 }
 
 int main(int argc, char ** argv) {
