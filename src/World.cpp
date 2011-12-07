@@ -12,6 +12,8 @@ void World::Update() {
 	p_.HandleControls();
 
 	p_.Update();
+
+	p_.CenterCam();
 }
 
 void World::Draw() {

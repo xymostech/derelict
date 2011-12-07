@@ -52,6 +52,10 @@ void Player::HandleControls() {
 	}
 }
 
+void Player::CenterCam() {
+	Cam::I().SetPos(pos_);
+}
+
 void Player::Draw() {
 	glPushMatrix();
 

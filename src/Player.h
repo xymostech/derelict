@@ -2,6 +2,7 @@
 #define PLAYER_H
 
 #include "Key.h"
+#include "Cam.h"
 
 #include "DisplayFuncs.h"
 #include "Vector.h"
@@ -25,6 +26,7 @@ public:
 	void Update();
 	void HandleControls();
 
+	void CenterCam();
 	void Draw();
 };
 
