@@ -20,6 +20,7 @@ public:
 	Floor(Vector l, Vector r);
 
 	bool  Below(Vector p);
+	bool  Inside(Vector p);
 	float SurfacePoint(float x);
 
 	void Draw();

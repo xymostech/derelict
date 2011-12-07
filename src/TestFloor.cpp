@@ -8,8 +8,8 @@ TEST(FlatFloor) {
 	CHECK( f.Below(Vector(5, -1)));
 	CHECK(!f.Below(Vector(5,  1)));
 
-	CHECK(!f.Below(Vector(-1 , -1)));
-	CHECK(!f.Below(Vector( 11, -1)));
+	CHECK( f.Inside(Vector( 5, 0)));
+	CHECK(!f.Inside(Vector(-1, 0)));
 
 	CHECK_CLOSE(f.SurfacePoint(0 ), 0, 0.01);
 	CHECK_CLOSE(f.SurfacePoint(5 ), 0, 0.01);
@@ -22,8 +22,8 @@ TEST(SlopeFloor) {
 	CHECK( f.Below(Vector(4, 2)));
 	CHECK(!f.Below(Vector(4, 4)));
 
-	CHECK(!f.Below(Vector(-4 , -4)));
-	CHECK(!f.Below(Vector( 12,  8)));
+	CHECK( f.Inside(Vector( 4, 0)));
+	CHECK(!f.Inside(Vector(-1, 0)));
 
 	CHECK_CLOSE(f.SurfacePoint(0), 0, 0.01);
 	CHECK_CLOSE(f.SurfacePoint(4), 3, 0.01);

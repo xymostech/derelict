@@ -11,8 +11,11 @@ Floor::Floor(Vector l, Vector r) :
 }
 
 bool Floor::Below(Vector p) {
-	return (diff_.Cross(p-l_) < 0) &&
-	       (p.i > l_.i) &&
+	return (diff_.Cross(p-l_) < 0);
+}
+
+bool Floor::Inside(Vector p) {
+	return (p.i > l_.i) &&
 	       (p.i < r_.i);
 }
 
