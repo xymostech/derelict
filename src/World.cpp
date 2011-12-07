@@ -18,6 +18,6 @@ void World::Draw() {
 	vector<Floor>::iterator it, end = floors_.end();
 
 	for(it=floors_.begin(); it!=end; ++it) {
-		it.Draw();
+		it->Draw();
 	}
 }

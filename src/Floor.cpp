@@ -23,7 +23,7 @@ float Floor::SurfacePoint(float x) {
 void Floor::Draw() {
 	glColor3f(0, 0, 0);
 	
-	glBegin();
+	glBegin(GL_LINES);
 		glVertex2f(l_.i, l_.j);
 		glVertex2f(r_.i, r_.j);
 	glEnd();
