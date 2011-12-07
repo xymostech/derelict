@@ -20,4 +20,6 @@ void World::Draw() {
 	for(it=floors_.begin(); it!=end; ++it) {
 		it->Draw();
 	}
+
+	p_.Draw();
 }
