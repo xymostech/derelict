@@ -24,17 +24,7 @@ void Init() {
 void Display() {
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 
-	glColor3f(0, 0, 0);
-
-	glPushMatrix();
-
-	glTranslatef(p.GetPos().i,
-	             p.GetPos().j,
-		     0);
-
-	Pyramid();
-
-	glPopMatrix();
+	p.Draw();
 
 	glPushMatrix();
 

@@ -51,3 +51,15 @@ void Player::HandleControls() {
 		Jump();
 	}
 }
+
+void Player::Draw() {
+	glPushMatrix();
+
+	glTranslatef(pos_.i, pos_.j, 0);
+
+	glColor3f(0, 0, 0);
+
+	Pyramid();
+
+	glPopMatrix();
+}

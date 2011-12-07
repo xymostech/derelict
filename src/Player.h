@@ -3,6 +3,7 @@
 
 #include "Key.h"
 
+#include "DisplayFuncs.h"
 #include "Vector.h"
 
 class Player {
@@ -23,6 +24,8 @@ public:
 
 	void Update();
 	void HandleControls();
+
+	void Draw();
 };
 
 #endif
