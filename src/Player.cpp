@@ -24,19 +24,16 @@ bool Player::OnGround() {
 	return on_ground_;
 }
 
-void Player::Update() {
+void Player::BeginUpdate() {
 	vel_.j -= 0.05;
-	pos_ += vel_;
+	new_pos_ = pos_ + vel_;
 
+	on_ground_ = false;
+}
+
+void Player::EndUpdate() {
+	pos_ = new_pos_;
 	vel_.i = 0;
-
-	if(pos_.j < 0) {
-		on_ground_ = true;
-		pos_.j = 0;
-		vel_.j = 0;
-	} else {
-		on_ground_ = false;
-	}
 }
 
 void Player::HandleControls() {

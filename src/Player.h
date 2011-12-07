@@ -8,7 +8,7 @@
 #include "Vector.h"
 
 class Player {
-	Vector pos_;
+	Vector pos_, new_pos_;
 	Vector vel_;
 
 	bool on_ground_;
@@ -23,7 +23,9 @@ public:
 
 	bool OnGround();
 
-	void Update();
+	void BeginUpdate();
+	void EndUpdate();
+
 	void HandleControls();
 
 	void CenterCam();

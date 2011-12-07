@@ -15,7 +15,9 @@ void World::AddWall(Wall w) {
 void World::Update() {
 	p_.HandleControls();
 
-	p_.Update();
+	p_.BeginUpdate();
+
+	p_.EndUpdate();
 
 	p_.CenterCam();
 }

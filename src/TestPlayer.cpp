@@ -2,43 +2,43 @@
 
 #include "Player.h"
 
-TEST_FIXTURE(Player, PlayerJump) {
-	Jump();
-	Update();
+//TEST_FIXTURE(Player, PlayerJump) {
+	//Jump();
+	//Update();
 
-	CHECK_EQUAL(GetPos().i, 0);
-	CHECK(GetPos().j > 0);
-}
+	//CHECK_EQUAL(GetPos().i, 0);
+	//CHECK(GetPos().j > 0);
+//}
 
-TEST_FIXTURE(Player, PlayerMove) {
-	Right();
-	Update();
+//TEST_FIXTURE(Player, PlayerMove) {
+	//Right();
+	//Update();
 
-	CHECK(GetPos().i < 0);
+	//CHECK(GetPos().i < 0);
 
-	Left();
-	Update();
+	//Left();
+	//Update();
 
-	CHECK_CLOSE(GetPos().i, 0, 0.01);
-}
+	//CHECK_CLOSE(GetPos().i, 0, 0.01);
+//}
 
-TEST_FIXTURE(Player, PlayerOnGround) {
-	Update();
+//TEST_FIXTURE(Player, PlayerOnGround) {
+	//Update();
 
-	CHECK(OnGround());
+	//CHECK(OnGround());
 
-	Right();
-	Update();
+	//Right();
+	//Update();
 
-	CHECK(OnGround());
+	//CHECK(OnGround());
 
-	Left();
-	Update();
+	//Left();
+	//Update();
 
-	CHECK(OnGround());
+	//CHECK(OnGround());
 
-	Jump();
-	Update();
+	//Jump();
+	//Update();
 
-	CHECK(!OnGround());
-}
+	//CHECK(!OnGround());
+//}
