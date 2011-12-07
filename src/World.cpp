@@ -8,6 +8,10 @@ void World::AddFloor(Floor f) {
 	floors_.push_back(f);
 }
 
+void World::AddWall(Wall w) {
+	walls_.push_back(w);
+}
+
 void World::Update() {
 	p_.HandleControls();
 
