@@ -19,6 +19,8 @@ public:
 
 	bool  Below(Vector p);
 	float SurfacePoint(float x);
+
+	void Draw();
 };
 
 #endif

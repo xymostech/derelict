@@ -15,5 +15,9 @@ void World::Update() {
 }
 
 void World::Draw() {
-	// Implement after adding other draw functions
+	vector<Floor>::iterator it, end = floors_.end();
+
+	for(it=floors_.begin(); it!=end; ++it) {
+		it.Draw();
+	}
 }

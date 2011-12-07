@@ -19,3 +19,12 @@ bool Floor::Below(Vector p) {
 float Floor::SurfacePoint(float x) {
 	return m_ * x + b_;
 }
+
+void Floor::Draw() {
+	glColor3f(0, 0, 0);
+	
+	glBegin();
+		glVertex2f(l_.i, l_.j);
+		glVertex2f(r_.i, r_.j);
+	glEnd();
+}
