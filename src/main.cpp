@@ -42,37 +42,10 @@ void Display() {
 	Cube();
 
 	glPopMatrix();
-
-
-	for(int i=-10; i<=10; ++i) {
-		glPushMatrix();
-
-		glTranslatef(i/2.0, -.5, 0.5);
-
-		glColor3f(0.2, 0.2, 0.2);
-
-		Cube();
-
-		glTranslatef(0, 0, -0.5);
-
-		glColor3f(0.2, 0.2, 0.2);
-
-		Cube();
-
-		glTranslatef(0, 0, -0.5);
-
-		glColor3f(0.2, 0.2, 0.2);
-
-		Cube();
-
-		glPopMatrix();
-	}
 }
 
 void Update() {
 	w.Update();
-
-	//Cam::I().SetPos(p.GetPos());
 }
 
 int main(int argc, char ** argv) {
