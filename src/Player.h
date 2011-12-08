@@ -3,6 +3,8 @@
 
 #include "Key.h"
 #include "Cam.h"
+#include "Floor.h"
+#include "Wall.h"
 
 #include "DisplayFuncs.h"
 #include "Vector.h"
@@ -25,6 +27,9 @@ public:
 
 	void BeginUpdate();
 	void EndUpdate();
+
+	void HandleFloor(Floor f);
+	void HandleWall(Wall w);
 
 	void HandleControls();
 

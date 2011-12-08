@@ -36,6 +36,28 @@ void Player::EndUpdate() {
 	vel_.i = 0;
 }
 
+void Player::HandleFloor(Floor f) {
+	if( f.Below(new_pos_) &&
+	   !f.Below(pos_) &&
+	    f.Inside(new_pos_)) {
+		vel_.j = 0;
+		new_pos_.j = f.SurfacePoint(new_pos_.i);
+		on_ground_ = true;
+	}
+}
+
+void Player::HandleWall(Wall w) {
+	if((w.OnLeft(pos_) !=
+	    w.OnLeft(new_pos_)) &&
+	   w.Between(new_pos_)) {
+		if(w.OnLeft(pos_)) {
+			new_pos_.i = w.Left();
+		} else {
+			new_pos_.i = w.Right();
+		}
+	}
+}
+
 void Player::HandleControls() {
 	if(Key::I().Pressed('D')) {
 		Right();
