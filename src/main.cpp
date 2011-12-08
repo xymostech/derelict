@@ -20,6 +20,10 @@ World w;
 
 void Init() {
 	glClearColor(1, 1, 1, 0);
+
+	w.AddFloor(Floor(Vector(-6, -1), Vector(5, -1)));
+	w.AddFloor(Floor(Vector(-10, 3), Vector(-5, -1)));
+	w.AddWall(Wall(Vector(4, -2), Vector(4, 5)));
 }
 
 void Display() {
