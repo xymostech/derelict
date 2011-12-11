@@ -66,7 +66,7 @@ clean-all: clean
 	@echo "$(GREEN_COLOR)Cleaning$(NO_COLOR) UnitTest++"
 	@cd $(dir $(TESTLIB)); make clean
 
-$(MACAPP)/.build: $(MACPRODUCT) | $(MACPRODUCTDIR)
+$(MACAPP)/.build: $(MACPRODUCT) $(RESOURCEDIR)Resources/ | $(MACPRODUCTDIR)
 	@echo "$(GREEN_COLOR)Building$(NO_COLOR) $(PRODUCT).app"
 	@mkdir -p $(MACAPP)/
 	@touch $(MACAPP)/.build
@@ -77,6 +77,7 @@ $(MACAPP)/.build: $(MACPRODUCT) | $(MACPRODUCTDIR)
 	@mkdir -p $(MACAPP)/Contents/Resources
 	@mkdir -p $(MACAPP)/Contents/Resources/English.lproj
 	@cp $(RESOURCEDIR)MainMenu.xib $(MACAPP)/Contents/Resources/English.lproj/
+	@cp -R $(RESOURCEDIR)Resources/* $(MACAPP)/Contents/Resources/ 
 
 $(MACTEST): $(MACTESTOBJECTS) $(TESTLIB) | $(MACOBJDIR)
 	@echo "$(GREEN_COLOR)Building$(NO_COLOR) tests"

@@ -12,6 +12,31 @@ void World::AddWall(Wall w) {
 	walls_.push_back(w);
 }
 
+void World::Load(string file) {
+	fstream f(file.c_str());
+	string type;
+
+	if(!f.good())
+		return;
+
+	while(!f.eof()) {
+		f >> type;
+		if(type == "floor") {
+			float x1, y1, x2, y2;
+			f >> x1 >> y1 >> x2 >> y2;
+
+			AddFloor(Floor(Vector(x1, y1),
+			               Vector(x2, y2)));
+		} else if(type == "wall") {
+			float x1, y1, x2, y2;
+			f >> x1 >> y1 >> x2 >> y2;
+
+			AddWall(Wall(Vector(x1, y1),
+			             Vector(x2, y2)));
+		}
+	}
+}
+
 void World::Update() {
 	p_.HandleControls();
 

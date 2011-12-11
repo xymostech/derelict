@@ -8,8 +8,12 @@
 #define WORLD_H
 
 #include <vector>
+#include <string>
+#include <fstream>
 
 using std::vector;
+using std::string;
+using std::fstream;
 
 #include "Floor.h"
 #include "Wall.h"
@@ -25,6 +29,8 @@ public:
 
 	void AddFloor(Floor f);
 	void AddWall(Wall w);
+
+	void Load(string file);
 
 	void Update();
 
