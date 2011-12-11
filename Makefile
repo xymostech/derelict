@@ -66,7 +66,12 @@ clean-all: clean
 	@echo "$(GREEN_COLOR)Cleaning$(NO_COLOR) UnitTest++"
 	@cd $(dir $(TESTLIB)); make clean
 
-$(MACAPP)/.build: $(MACPRODUCT) $(RESOURCEDIR)Resources/ | $(MACPRODUCTDIR)
+.PHONY: mac-res
+mac-res: $(MACAPP)/.build
+	@echo "$(GREEN_COLOR)Copying$(NO_COLOR) resources"
+	@cp -R $(RESOURCEDIR)Resources/* $(MACAPP)/Contents/Resources/ 
+
+$(MACAPP)/.build: $(MACPRODUCT) | $(MACPRODUCTDIR)
 	@echo "$(GREEN_COLOR)Building$(NO_COLOR) $(PRODUCT).app"
 	@mkdir -p $(MACAPP)/
 	@touch $(MACAPP)/.build
