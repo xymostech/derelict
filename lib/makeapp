@@ -1,0 +1,14 @@
+#!/usr/bin/env ruby
+
+name = ARGV[0]
+app = ARGV[1]
+
+program = ARGV[2]
+info = ARGV[3]
+
+`mkdir -p #{app}`
+`mkdir -p #{app}/Contents`
+`sed s/@PROD/#{name}/ < #{info} > #{app}/Contents/Info.plist`
+`mkdir -p #{app}/Contents/MacOS`
+`cp #{program} #{app}/Contents/MacOS/`
+`mkdir -p #{app}/Contents/Resources`

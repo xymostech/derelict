@@ -73,15 +73,8 @@ mac-res: $(MACAPP)/.build
 
 $(MACAPP)/.build: $(MACPRODUCT) | $(MACPRODUCTDIR)
 	@echo "$(GREEN_COLOR)Building$(NO_COLOR) $(PRODUCT).app"
-	@mkdir -p $(MACAPP)/
+	./lib/makeapp $(PRODUCT) $(MACAPP) $(MACPRODUCT) $(RESOURCEDIR)Info.plist
 	@touch $(MACAPP)/.build
-	@mkdir -p $(MACAPP)/Contents
-	@sed s/@PROD/$(PRODUCT)/ <$(RESOURCEDIR)Info.plist >$(MACAPP)/Contents/Info.plist
-	@mkdir -p $(MACAPP)/Contents/MacOS
-	@cp $(MACPRODUCT) $(MACAPP)/Contents/MacOS/
-	@mkdir -p $(MACAPP)/Contents/Resources
-	@mkdir -p $(MACAPP)/Contents/Resources/English.lproj
-	@cp $(RESOURCEDIR)MainMenu.xib $(MACAPP)/Contents/Resources/English.lproj/
 	@cp -R $(RESOURCEDIR)Resources/* $(MACAPP)/Contents/Resources/ 
 
 $(MACTEST): $(MACTESTOBJECTS) $(TESTLIB) | $(MACOBJDIR)
