@@ -14,10 +14,47 @@ OBJDIR     = obj/
 PRODUCTDIR = product/
 
 # file lists
-SOURCES     = $(notdir $(wildcard src/*.cpp))
-HEADERS     = $(notdir $(wildcard src/*.h))
-OBJECTS     = $(filter-out Test%, $(SOURCES:.cpp=.o))
-TESTOBJECTS = $(filter-out main.o,$(SOURCES:.cpp=.o))
+SOURCES       = Cam.cpp\
+	        DisplayFuncs.cpp\
+	        Floor.cpp\
+	        Key.cpp\
+	        Player.cpp\
+	        Vector.cpp\
+	        Wall.cpp\
+	        World.cpp\
+	        main.cpp\
+		Editmain.cpp\
+	        Testmain.cpp\
+	        TestCam.cpp\
+	        TestFloor.cpp\
+	        TestKey.cpp\
+	        TestPlayer.cpp\
+	        TestWall.cpp\
+	        TestWorld.cpp
+HEADERS       = Cam.h\
+	        DisplayFuncs.h\
+	        Floor.h\
+	        Key.h\
+	        Player.h\
+	        Vector.h\
+	        Wall.h\
+	        World.h
+COMMONOBJECTS = Cam.o\
+		DisplayFuncs.o\
+		Floor.o\
+		Key.o\
+		Player.o\
+		Vector.o\
+		Wall.o\
+		World.o
+MAINOBJECTS   = main.o
+TESTOBJECTS   = Testmain.o\
+		TestCam.o\
+		TestFloor.o\
+		TestKey.o\
+		TestPlayer.o\
+		TestWall.o\
+		TestWorld.o
 
 # Final products
 PRODUCT = derelict
@@ -38,13 +75,13 @@ MACOBJDIR     = $(MACBUILDDIR)$(OBJDIR)
 MACPRODUCTDIR = $(MACBUILDDIR)$(PRODUCTDIR)
 
 # File lists
-MACOBJECTS     = $(addprefix $(MACOBJDIR), $(OBJECTS))
-MACTESTOBJECTS = $(addprefix $(MACOBJDIR), $(TESTOBJECTS))
+MACMAINOBJECTS = $(addprefix $(MACOBJDIR), $(MAINOBJECTS) $(COMMONOBJECTS))
+MACTESTOBJECTS = $(addprefix $(MACOBJDIR), $(TESTOBJECTS) $(COMMONOBJECTS))
 
 # Final products
-MACPRODUCT = $(MACOBJDIR)$(PRODUCT)
-MACAPP     = $(MACPRODUCTDIR)$(PRODUCT).app
-MACTEST    = $(MACOBJDIR)$(TESTPRODUCT)
+MACPRODUCT     = $(MACOBJDIR)$(PRODUCT)
+MACAPP         = $(MACPRODUCTDIR)$(PRODUCT).app
+MACTEST        = $(MACOBJDIR)$(TESTPRODUCT)
 
 # Colors for output
 NO_COLOR=\x1b[0m
@@ -69,13 +106,13 @@ clean-all: clean
 .PHONY: mac-res
 mac-res: $(MACAPP)/.build
 	@echo "$(GREEN_COLOR)Copying$(NO_COLOR) resources"
-	@cp -R $(RESOURCEDIR)Resources/* $(MACAPP)/Contents/Resources/ 
+	@cp -R $(RESOURCEDIR)Resources/* $(MACAPP)/Contents/Resources/
 
 $(MACAPP)/.build: $(MACPRODUCT) | $(MACPRODUCTDIR)
 	@echo "$(GREEN_COLOR)Building$(NO_COLOR) $(PRODUCT).app"
-	./lib/makeapp $(PRODUCT) $(MACAPP) $(MACPRODUCT) $(RESOURCEDIR)Info.plist
+	@./lib/makeapp $(PRODUCT) $(MACAPP) $(MACPRODUCT) $(RESOURCEDIR)Info.plist
 	@touch $(MACAPP)/.build
-	@cp -R $(RESOURCEDIR)Resources/* $(MACAPP)/Contents/Resources/ 
+	@cp -R $(RESOURCEDIR)Resources/* $(MACAPP)/Contents/Resources/
 
 $(MACTEST): $(MACTESTOBJECTS) $(TESTLIB) | $(MACOBJDIR)
 	@echo "$(GREEN_COLOR)Building$(NO_COLOR) tests"
@@ -83,7 +120,7 @@ $(MACTEST): $(MACTESTOBJECTS) $(TESTLIB) | $(MACOBJDIR)
 	@echo "$(RED_COLOR)Running$(NO_COLOR) tests"
 	@./$(MACTEST)
 
-$(MACPRODUCT): $(MACOBJECTS) | $(MACOBJDIR)
+$(MACPRODUCT): $(MACMAINOBJECTS) | $(MACOBJDIR)
 	@echo "$(GREEN_COLOR)Building$(NO_COLOR) $(PRODUCT)"
 	@$(CC) $(LFLAGS) $(MACLFLAGS) $^ -o $@
 
