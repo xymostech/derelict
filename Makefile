@@ -48,6 +48,7 @@ COMMONOBJECTS = Cam.o\
 		Wall.o\
 		World.o
 MAINOBJECTS   = main.o
+EDITOBJECTS   = Editmain.o
 TESTOBJECTS   = Testmain.o\
 		TestCam.o\
 		TestFloor.o\
@@ -77,10 +78,13 @@ MACPRODUCTDIR = $(MACBUILDDIR)$(PRODUCTDIR)
 # File lists
 MACMAINOBJECTS = $(addprefix $(MACOBJDIR), $(MAINOBJECTS) $(COMMONOBJECTS))
 MACTESTOBJECTS = $(addprefix $(MACOBJDIR), $(TESTOBJECTS) $(COMMONOBJECTS))
+MACEDITOBJECTS = $(addprefix $(MACOBJDIR), $(EDITOBJECTS) $(COMMONOBJECTS))
 
 # Final products
 MACPRODUCT     = $(MACOBJDIR)$(PRODUCT)
 MACAPP         = $(MACPRODUCTDIR)$(PRODUCT).app
+MACEDITPRODUCT = $(MACOBJDIR)editor
+MACEDITAPP     = $(MACPRODUCTDIR)editor.app
 MACTEST        = $(MACOBJDIR)$(TESTPRODUCT)
 
 # Colors for output
@@ -91,7 +95,7 @@ RED_COLOR=\x1b[31;01m
 
 
 .PHONY: mac
-mac: $(MACAPP)/.build $(MACTEST)
+mac: $(MACAPP)/.build $(MACEDITAPP)/.build $(MACTEST)
 
 .PHONY: clean
 clean:
@@ -114,6 +118,12 @@ $(MACAPP)/.build: $(MACPRODUCT) | $(MACPRODUCTDIR)
 	@touch $(MACAPP)/.build
 	@cp -R $(RESOURCEDIR)Resources/* $(MACAPP)/Contents/Resources/
 
+$(MACEDITAPP)/.build: $(MACEDITPRODUCT) | $(MACPRODUCTDIR)
+	@echo "$(GREEN_COLOR)Building$(NO_COLOR) editor.app"
+	@./lib/makeapp editor $(MACEDITAPP) $(MACEDITPRODUCT) $(RESOURCEDIR)Info.plist
+	@touch $(MACEDITAPP)/.build
+	@cp -R $(RESOURCEDIR)Resources/* $(MACAPP)/Contents/Resources/
+
 $(MACTEST): $(MACTESTOBJECTS) $(TESTLIB) | $(MACOBJDIR)
 	@echo "$(GREEN_COLOR)Building$(NO_COLOR) tests"
 	@$(CC) $(LFLAGS) $(MACLFLAGS) $(TESTLFLAGS) $^ -o $@
@@ -122,6 +132,10 @@ $(MACTEST): $(MACTESTOBJECTS) $(TESTLIB) | $(MACOBJDIR)
 
 $(MACPRODUCT): $(MACMAINOBJECTS) | $(MACOBJDIR)
 	@echo "$(GREEN_COLOR)Building$(NO_COLOR) $(PRODUCT)"
+	@$(CC) $(LFLAGS) $(MACLFLAGS) $^ -o $@
+
+$(MACEDITPRODUCT): $(MACEDITOBJECTS) | $(MACOBJDIR)
+	@echo "$(GREEN_COLOR)Building$(NO_COLOR) editor"
 	@$(CC) $(LFLAGS) $(MACLFLAGS) $^ -o $@
 
 $(MACOBJDIR)%.o: $(addprefix $(SRCDIR), %.cpp) $(addprefix $(SRCDIR), $(HEADERS)) | $(MACOBJDIR)
