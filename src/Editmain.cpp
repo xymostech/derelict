@@ -1,9 +1,7 @@
 /*
- * main.cpp
+ * Editmain.cpp
  *
- * main file for derelict app
- *
- * starts GLUT and runs callbacks
+ * main file for world editor app
  */
 
 #include <iostream>
@@ -11,7 +9,6 @@
 
 #include "Key.h"
 #include "Cam.h"
-#include "Player.h"
 #include "World.h"
 
 #include "DisplayFuncs.h"
