@@ -24,6 +24,7 @@ SOURCES       = Cam.cpp\
 	        World.cpp\
 	        main.cpp\
 		Editmain.cpp\
+		Editor.cpp\
 	        Testmain.cpp\
 	        TestCam.cpp\
 	        TestFloor.cpp\
@@ -48,7 +49,8 @@ COMMONOBJECTS = Cam.o\
 		Wall.o\
 		World.o
 MAINOBJECTS   = main.o
-EDITOBJECTS   = Editmain.o
+EDITOBJECTS   = Editmain.o\
+		Editor.o
 TESTOBJECTS   = Testmain.o\
 		TestCam.o\
 		TestFloor.o\

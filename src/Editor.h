@@ -8,6 +8,8 @@
 #ifndef EDITOR_H
 #define EDITOR_H
 
+#include <GL/glfw.h>
+
 #include "Vector.h"
 
 class Editor
@@ -19,4 +21,6 @@ public:
 	void Update();
 
 	void Draw();
-}
+};
+
+#endif
