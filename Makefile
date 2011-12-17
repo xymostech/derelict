@@ -18,6 +18,7 @@ SOURCES       = Cam.cpp\
 	        DisplayFuncs.cpp\
 	        Floor.cpp\
 	        Key.cpp\
+		Mouse.cpp\
 	        Player.cpp\
 	        Vector.cpp\
 	        Wall.cpp\
@@ -29,6 +30,7 @@ SOURCES       = Cam.cpp\
 	        TestCam.cpp\
 	        TestFloor.cpp\
 	        TestKey.cpp\
+		TestMouse.cpp\
 	        TestPlayer.cpp\
 	        TestWall.cpp\
 	        TestWorld.cpp
@@ -36,6 +38,7 @@ HEADERS       = Cam.h\
 	        DisplayFuncs.h\
 	        Floor.h\
 	        Key.h\
+		Mouse.h\
 	        Player.h\
 	        Vector.h\
 	        Wall.h\
@@ -44,6 +47,7 @@ COMMONOBJECTS = Cam.o\
 		DisplayFuncs.o\
 		Floor.o\
 		Key.o\
+		Mouse.o\
 		Player.o\
 		Vector.o\
 		Wall.o\
@@ -55,6 +59,7 @@ TESTOBJECTS   = Testmain.o\
 		TestCam.o\
 		TestFloor.o\
 		TestKey.o\
+		TestMouse.o\
 		TestPlayer.o\
 		TestWall.o\
 		TestWorld.o
