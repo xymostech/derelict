@@ -10,41 +10,27 @@
 #include "Key.h"
 #include "Cam.h"
 #include "World.h"
+#include "Mouse.h"
+#include "Editor.h"
 
 #include "DisplayFuncs.h"
 
-World w;
+Editor e;
 
 void Init() {
 	glClearColor(1, 1, 1, 0);
-
-	w.Load("world/main.world");
 }
 
 void Display() {
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 
-	w.Draw();
+	Cam::I().SetPos(Vector(0, 0));
 
-	glPushMatrix();
-
-	glTranslatef(0, 0, 5.0);
-
-	glColor3f(1, 0, 0);
-
-	Pyramid();
-
-	glTranslatef(0, 0, 5.0);
-
-	glColor3f(0, 1, 0);
-
-	Cube();
-
-	glPopMatrix();
+	e.Draw();
 }
 
 void Update() {
-	w.Update();
+	e.Update();
 }
 
 int main(int argc, char ** argv) {
@@ -59,6 +45,9 @@ int main(int argc, char ** argv) {
 
 	glfwSetKeyCallback(Key::KeyEvent);
 	glfwSetWindowSizeCallback(Cam::ResizeCallback);
+
+	glfwSetMousePosCallback(Mouse::MouseMove);
+	glfwSetMouseButtonCallback(Mouse::MouseButton);
 
 	bool running = true;
 

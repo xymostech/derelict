@@ -10,6 +10,8 @@
 
 #include <GL/glfw.h>
 
+#include "Mouse.h"
+
 #include "Vector.h"
 
 class Editor
