@@ -13,6 +13,7 @@
 #include "Cam.h"
 #include "Player.h"
 #include "World.h"
+#include "Mouse.h"
 
 #include "DisplayFuncs.h"
 
@@ -62,6 +63,9 @@ int main(int argc, char ** argv) {
 
 	glfwSetKeyCallback(Key::KeyEvent);
 	glfwSetWindowSizeCallback(Cam::ResizeCallback);
+
+	glfwSetMousePosCallback(Mouse::MouseMove);
+	glfwSetMouseButtonCallback(Mouse::MouseButton);
 
 	bool running = true;
 
