@@ -18,6 +18,10 @@ class Editor
 {
 	Vector p1;
 
+	bool grabbed_;
+
+	bool mode_;
+
 	void DrawHandle();
 public:
 	Editor();

@@ -1,7 +1,7 @@
 #include "Editor.h"
 
 Editor::Editor() {
-	
+	mode_ = 0;
 }
 
 void Editor::DrawHandle() {
@@ -19,8 +19,24 @@ void Editor::DrawHandle() {
 }
 
 void Editor::Update() {
-	if(Mouse::I().Pressed(0))
-		p1 = Mouse::I().WorldPos();
+	if(mode_ == 0) {
+		if(Mouse::I().Pressed(0)) {
+			if((p1 - Mouse::I().WorldPos()).Len() < 0.2) {
+				grabbed_ = true;
+				p1 = Mouse::I().WorldPos();
+			}
+			mode_ = 1;
+		}
+	} else if(mode_ == 1) {
+		if(!Mouse::I().Pressed(0)) {
+			mode_ = 0;
+			grabbed_ = false;
+		} else {
+			if(grabbed_)
+				p1 = Mouse::I().WorldPos();
+		}
+		
+	}
 }
 
 void Editor::Draw() {
