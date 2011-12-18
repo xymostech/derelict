@@ -8,6 +8,7 @@
 #ifndef EDITOR_H
 #define EDITOR_H
 
+#include <iostream>
 #include <GL/glfw.h>
 
 #include "Mouse.h"
@@ -22,7 +23,11 @@ class Editor
 	Vector* grabbed_pt_;
 	bool grabbed_;
 
-	bool mode_;
+	Vector cam_pos_;
+	Vector pan_start_;
+	Vector pan_diff_;
+
+	int mode_;
 
 	void DrawHandle();
 public:

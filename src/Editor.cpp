@@ -31,6 +31,9 @@ void Editor::Update() {
 			if(grabbed_)
 				*grabbed_pt_ = Mouse::I().WorldPos();
 			mode_ = 1;
+		} else if(Mouse::I().Pressed(1)) {
+			pan_start_ = Mouse::I().WorldPos();
+			mode_ = 2;
 		}
 	} else if(mode_ == 1) {
 		if(!Mouse::I().Pressed(0)) {
@@ -40,11 +43,20 @@ void Editor::Update() {
 			if(grabbed_)
 				*grabbed_pt_ = Mouse::I().WorldPos();
 		}
-		
+	} else if(mode_ == 2) {
+		if(!Mouse::I().Pressed(1)) {
+			mode_ = 0;
+			cam_pos_ += pan_diff_;
+			pan_diff_ = Vector();
+		} else {
+			pan_diff_ += pan_start_ - Mouse::I().WorldPos();
+		}
 	}
 }
 
 void Editor::Draw() {
+	Cam::I().SetPos(cam_pos_ + pan_diff_);
+	
 	glPushMatrix();
 		glTranslatef(p1.i, p1.j, 0);
 
