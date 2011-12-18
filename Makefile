@@ -42,7 +42,8 @@ HEADERS       = Cam.h\
 	        Player.h\
 	        Vector.h\
 	        Wall.h\
-	        World.h
+	        World.h\
+	        Editor.h
 COMMONOBJECTS = Cam.o\
 		DisplayFuncs.o\
 		Floor.o\
