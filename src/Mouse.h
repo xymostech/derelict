@@ -9,6 +9,8 @@
 
 #include <GL/glfw.h>
 
+#include "Cam.h"
+
 #include "Vector.h"
 
 class Mouse
@@ -26,6 +28,8 @@ public:
 	static void GLFWCALL MouseButton(int button, int action);
 
 	Vector Pos();
+	Vector WorldPos();
+	
 	bool Pressed(int button);
 };
 
