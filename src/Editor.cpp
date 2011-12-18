@@ -4,6 +4,20 @@ Editor::Editor() {
 	
 }
 
+void Editor::DrawHandle() {
+	glBegin(GL_POLYGON);
+		for(float ang = 0; ang < 2*M_PI; ang += M_PI/8) {
+			glVertex2f(0.03 * cos(ang), 0.03 * sin(ang));
+		}
+	glEnd();
+
+	glBegin(GL_LINE_LOOP);
+		for(float ang = 0; ang < 2*M_PI; ang += M_PI/8) {
+			glVertex2f(0.2 * cos(ang), 0.2 * sin(ang));
+		}
+	glEnd();
+}
+
 void Editor::Update() {
 	
 }
@@ -14,10 +28,7 @@ void Editor::Draw() {
 
 		glColor3f(0, 0, 0);
 
-		glBegin(GL_POLYGON);
-		for(float angle=0; angle<2*M_PI; angle += M_PI/4) {
-			glVertex2f(cos(angle), sin(angle));
-		}
-		glEnd();
+		DrawHandle();
+
 	glPopMatrix();
 }

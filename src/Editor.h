@@ -17,6 +17,8 @@
 class Editor
 {
 	Vector p1;
+
+	void DrawHandle();
 public:
 	Editor();
 
