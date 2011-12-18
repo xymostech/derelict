@@ -29,6 +29,12 @@ class Editor
 
 	int mode_;
 
+	enum Mode {
+		MODE_NOTHING,
+		MODE_MOVE_POINT,
+		MODE_PAN
+	};
+
 	void DrawHandle();
 public:
 	Editor();
