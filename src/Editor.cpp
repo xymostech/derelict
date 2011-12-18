@@ -23,8 +23,13 @@ void Editor::Update() {
 		if(Mouse::I().Pressed(0)) {
 			if((p1 - Mouse::I().WorldPos()).Len() < 0.2) {
 				grabbed_ = true;
-				p1 = Mouse::I().WorldPos();
+				grabbed_pt_ = &p1;
+			} else if((p2 - Mouse::I().WorldPos()).Len() < 0.2) {
+				grabbed_ = true;
+				grabbed_pt_ = &p2;
 			}
+			if(grabbed_)
+				*grabbed_pt_ = Mouse::I().WorldPos();
 			mode_ = 1;
 		}
 	} else if(mode_ == 1) {
@@ -33,7 +38,7 @@ void Editor::Update() {
 			grabbed_ = false;
 		} else {
 			if(grabbed_)
-				p1 = Mouse::I().WorldPos();
+				*grabbed_pt_ = Mouse::I().WorldPos();
 		}
 		
 	}
@@ -46,6 +51,13 @@ void Editor::Draw() {
 		glColor3f(0, 0, 0);
 
 		DrawHandle();
+	glPopMatrix();
 
+	glPushMatrix();
+		glTranslatef(p2.i, p2.j, 0);
+
+		glColor3f(0, 0, 0);
+
+		DrawHandle();
 	glPopMatrix();
 }

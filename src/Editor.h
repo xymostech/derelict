@@ -17,7 +17,9 @@
 class Editor
 {
 	Vector p1;
+	Vector p2;
 
+	Vector* grabbed_pt_;
 	bool grabbed_;
 
 	bool mode_;
