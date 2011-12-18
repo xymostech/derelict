@@ -10,12 +10,13 @@ void Cam::SetupProjection() {
 	glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
 		glViewport(0, 0, Width(), Height());
-		gluPerspective(40, Width()/(float)Height(), 0.1, 100);
-		//glFrustum(-1*HalfWidth()/100.0,
-			     //HalfWidth()/100.0,
-			  //-1*HalfHeight()/100.0,
-			     //HalfHeight()/100.0,
-			  //10/zoom_, 100);
+
+		float frac = Width() / (float) Height();
+		glFrustum(-.5*frac,
+			   .5*frac,
+			  -.5,
+			   .5,
+			  1, 100);
 	glMatrixMode(GL_MODELVIEW);
 }
 
