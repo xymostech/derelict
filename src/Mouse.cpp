@@ -26,7 +26,7 @@ Vector Mouse::Pos() {
 
 Vector Mouse::WorldPos() {
 	Vector screen_pos = Cam::I().GetPos();
-	Vector min_pos = Cam::I().GetMinCoord(0);
+	Vector min_pos = Cam::I().GetMaxCoord(0);
 	
 	Vector new_pos = pos_;
 
