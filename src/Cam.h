@@ -39,6 +39,8 @@ public:
 	void SetZoom(float zoom);
 	void SetPos(Vector pos);
 
+	Vector GetMaxCoord(float z);
+
 	float  GetZoom();
 	Vector GetPos();
 };

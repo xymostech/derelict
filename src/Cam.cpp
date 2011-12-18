@@ -69,6 +69,12 @@ void Cam::SetPos(Vector pos) {
 	SetupView();
 }
 
+Vector Cam::GetMaxCoord(float z) {
+	float frac = Width() / (float) Height();
+
+	return Vector(.5 * (z + 5) * frac, .5 * (z + 5));
+}
+
 float Cam::GetZoom() {
 	return zoom_;
 }
