@@ -19,7 +19,8 @@ void Editor::DrawHandle() {
 }
 
 void Editor::Update() {
-	
+	if(Mouse::I().Pressed(0))
+		p1 = Mouse::I().WorldPos();
 }
 
 void Editor::Draw() {
