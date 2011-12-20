@@ -1,7 +1,7 @@
 #include "Editor.h"
 
 Editor::Editor() {
-	mode_ = 0;
+	mode_ = MODE_NOTHING;
 
 	floors_.push_back(Floor(Vector(0, 0), Vector(3, 0)));
 }
