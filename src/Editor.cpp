@@ -46,8 +46,19 @@ void Editor::Update() {
 			mode_ = MODE_NOTHING;
 			grabbed_ = false;
 		} else {
-			if(grabbed_)
-				*grabbed_pt_ = Mouse::I().WorldPos();
+			if(grabbed_) {
+				if(Key::I().Pressed(GLFW_KEY_LSHIFT) ||
+				   Key::I().Pressed(GLFW_KEY_RSHIFT)) {
+					Vector new_pos = Mouse::I().WorldPos();
+
+					new_pos.i = floor(new_pos.i + 0.5);
+					new_pos.j = floor(new_pos.j + 0.5);
+
+					*grabbed_pt_ = new_pos;
+				} else {
+					*grabbed_pt_ = Mouse::I().WorldPos();
+				}
+			}
 		}
 	} else if(mode_ == MODE_PAN) {
 		if(!Mouse::I().Pressed(1)) {
