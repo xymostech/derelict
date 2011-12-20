@@ -9,16 +9,19 @@
 #define EDITOR_H
 
 #include <iostream>
+#include <vector>
 #include <GL/glfw.h>
 
 #include "Mouse.h"
+#include "Key.h"
 
 #include "Vector.h"
 
+using std::vector;
+
 class Editor
 {
-	Vector p1;
-	Vector p2;
+	vector<Vector> pts_;
 
 	Vector* grabbed_pt_;
 	bool grabbed_;
@@ -32,7 +35,8 @@ class Editor
 	enum Mode {
 		MODE_NOTHING,
 		MODE_MOVE_POINT,
-		MODE_PAN
+		MODE_PAN,
+		MODE_ADD_POINT
 	};
 
 	void DrawHandle();
