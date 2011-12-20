@@ -34,9 +34,9 @@ void Editor::Update() {
 		} else if(Mouse::I().Pressed(1)) {
 			pan_start_ = Mouse::I().WorldPos();
 			mode_ = MODE_PAN;
-		}/* else if(Key::I().Pressed('N')) {
-			mode_ = MODE_ADD_POINT;
-		}*/
+		} else if(Key::I().Pressed('F')) {
+			mode_ = MODE_ADD_FLOOR_1;
+		}
 	} else if(mode_ == MODE_MOVE_POINT) {
 		if(!Mouse::I().Pressed(0)) {
 			mode_ = MODE_NOTHING;
@@ -59,12 +59,21 @@ void Editor::Update() {
 		} else {
 			cam_pos_ += pan_start_ - Mouse::I().WorldPos();
 		}
-	}/* else if(mode_ == MODE_ADD_POINT) {
+	} else if(mode_ == MODE_ADD_FLOOR_1) {
 		if(Mouse::I().Pressed(0)) {
-			mode_ = MODE_NOTHING;
-			pts_.push_back(Mouse::I().WorldPos());
+			store_pt_ = Mouse::I().WorldPos();
+			mode_ = MODE_ADD_FLOOR_WAIT;
 		}
-	}*/
+	} else if(mode_ == MODE_ADD_FLOOR_WAIT) {
+		if(!Mouse::I().Pressed(0)) {
+			mode_ = MODE_ADD_FLOOR_2;
+		}
+	} else if(mode_ == MODE_ADD_FLOOR_2) {
+		if(Mouse::I().Pressed(0)) {
+			floors_.push_back(Floor(store_pt_, Mouse::I().WorldPos()));
+			mode_ = MODE_NOTHING;
+		}
+	}
 }
 
 void Editor::Draw() {

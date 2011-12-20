@@ -30,11 +30,15 @@ class Editor
 	Vector cam_pos_;
 	Vector pan_start_;
 
+	Vector store_pt_;
+
 	enum Mode {
 		MODE_NOTHING,
 		MODE_MOVE_POINT,
 		MODE_PAN,
-		MODE_ADD_POINT
+		MODE_ADD_FLOOR_1,
+		MODE_ADD_FLOOR_WAIT,
+		MODE_ADD_FLOOR_2
 	} mode_;
 
 	void DrawHandle();
