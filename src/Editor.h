@@ -26,11 +26,9 @@ class Editor
 	vector<Floor> floors_;
 
 	Vector* grabbed_pt_;
-	bool grabbed_;
 
 	Vector cam_pos_;
 	Vector pan_start_;
-	Vector pan_diff_;
 
 	int mode_;
 

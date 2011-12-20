@@ -25,15 +25,11 @@ void Editor::Update() {
 		if(Mouse::I().Pressed(0)) {
 			for(size_t i=0; i<floors_.size(); ++i) {
 				if((floors_[i].l_ - Mouse::I().WorldPos()).Len() < 0.2) {
-					grabbed_ = true;
 					grabbed_pt_ = &floors_[i].l_;
 				} else if((floors_[i].r_ - Mouse::I().WorldPos()).Len() < 0.2) {
-					grabbed_ = true;
 					grabbed_pt_ = &floors_[i].r_;
 				}
 			}
-			if(grabbed_)
-				*grabbed_pt_ = Mouse::I().WorldPos();
 			mode_ = MODE_MOVE_POINT;
 		} else if(Mouse::I().Pressed(1)) {
 			pan_start_ = Mouse::I().WorldPos();
@@ -44,29 +40,24 @@ void Editor::Update() {
 	} else if(mode_ == MODE_MOVE_POINT) {
 		if(!Mouse::I().Pressed(0)) {
 			mode_ = MODE_NOTHING;
-			grabbed_ = false;
 		} else {
-			if(grabbed_) {
-				if(Key::I().Pressed(GLFW_KEY_LSHIFT) ||
-				   Key::I().Pressed(GLFW_KEY_RSHIFT)) {
-					Vector new_pos = Mouse::I().WorldPos();
+			if(Key::I().Pressed(GLFW_KEY_LSHIFT) ||
+			   Key::I().Pressed(GLFW_KEY_RSHIFT)) {
+				Vector new_pos = Mouse::I().WorldPos();
 
-					new_pos.i = floor(new_pos.i + 0.5);
-					new_pos.j = floor(new_pos.j + 0.5);
+				new_pos.i = floor(new_pos.i + 0.5);
+				new_pos.j = floor(new_pos.j + 0.5);
 
-					*grabbed_pt_ = new_pos;
-				} else {
-					*grabbed_pt_ = Mouse::I().WorldPos();
-				}
+				*grabbed_pt_ = new_pos;
+			} else {
+				*grabbed_pt_ = Mouse::I().WorldPos();
 			}
 		}
 	} else if(mode_ == MODE_PAN) {
 		if(!Mouse::I().Pressed(1)) {
 			mode_ = MODE_NOTHING;
-			cam_pos_ += pan_diff_;
-			pan_diff_ = Vector();
 		} else {
-			pan_diff_ += pan_start_ - Mouse::I().WorldPos();
+			cam_pos_ += pan_start_ - Mouse::I().WorldPos();
 		}
 	}/* else if(mode_ == MODE_ADD_POINT) {
 		if(Mouse::I().Pressed(0)) {
@@ -77,7 +68,7 @@ void Editor::Update() {
 }
 
 void Editor::Draw() {
-	Cam::I().SetPos(cam_pos_ + pan_diff_);
+	Cam::I().SetPos(cam_pos_);
 
 	for(size_t i=0; i<floors_.size(); ++i) {
 		floors_[i].Draw();
