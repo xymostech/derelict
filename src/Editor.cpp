@@ -26,11 +26,12 @@ void Editor::Update() {
 			for(size_t i=0; i<floors_.size(); ++i) {
 				if((floors_[i].l_ - Mouse::I().WorldPos()).Len() < 0.2) {
 					grabbed_pt_ = &floors_[i].l_;
+					mode_ = MODE_MOVE_POINT;
 				} else if((floors_[i].r_ - Mouse::I().WorldPos()).Len() < 0.2) {
 					grabbed_pt_ = &floors_[i].r_;
+					mode_ = MODE_MOVE_POINT;
 				}
 			}
-			mode_ = MODE_MOVE_POINT;
 		} else if(Mouse::I().Pressed(1)) {
 			pan_start_ = Mouse::I().WorldPos();
 			mode_ = MODE_PAN;
