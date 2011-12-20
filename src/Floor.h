@@ -24,6 +24,8 @@ public:
 	float SurfacePoint(float x);
 
 	void Draw();
+
+	friend class Editor;
 };
 
 #endif

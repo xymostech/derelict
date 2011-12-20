@@ -12,6 +12,8 @@
 #include <vector>
 #include <GL/glfw.h>
 
+#include "Floor.h"
+
 #include "Mouse.h"
 #include "Key.h"
 
@@ -21,7 +23,7 @@ using std::vector;
 
 class Editor
 {
-	vector<Vector> pts_;
+	vector<Floor> floors_;
 
 	Vector* grabbed_pt_;
 	bool grabbed_;
