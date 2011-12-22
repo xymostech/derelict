@@ -93,15 +93,4 @@ void Editor::Draw() {
 			DrawHandle();
 		glPopMatrix();
 	}
-/*
-	if(mode_ == MODE_ADD_POINT) {
-		glPushMatrix();
-			glTranslatef(Mouse::I().WorldPos().i,
-			             Mouse::I().WorldPos().j,
-				     0);
-			glColor3f(0, 0, 0);
-
-			DrawHandle();
-		glPopMatrix();
-	}*/
 }
