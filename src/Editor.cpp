@@ -61,16 +61,12 @@ void Editor::Update() {
 			cam_pos_ += pan_start_ - Mouse::I().WorldPos();
 		}
 	} else if(mode_ == MODE_ADD_FLOOR_1) {
-		if(Mouse::I().Pressed(0)) {
+		if(Mouse::I().Pressed(0, Mouse::PRESSED | Mouse::EDGE)) {
 			store_pt_ = Mouse::I().WorldPos();
-			mode_ = MODE_ADD_FLOOR_WAIT;
-		}
-	} else if(mode_ == MODE_ADD_FLOOR_WAIT) {
-		if(!Mouse::I().Pressed(0)) {
-			mode_ = MODE_ADD_FLOOR_2;
+			mode_ = MODE_ADD_FLOOR_2
 		}
 	} else if(mode_ == MODE_ADD_FLOOR_2) {
-		if(Mouse::I().Pressed(0)) {
+		if(Mouse::I().Pressed(0, Mouse::PRESSED | Mouse::EDGE)) {
 			floors_.push_back(Floor(store_pt_, Mouse::I().WorldPos()));
 			mode_ = MODE_NOTHING;
 		}
