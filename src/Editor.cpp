@@ -38,10 +38,10 @@ void Editor::Update() {
 	if(mode_ == MODE_NOTHING) {
 		if(Mouse::I().Pressed(0)) {
 			for(size_t i=0; i<floors_.size(); ++i) {
-				if((floors_[i].l_ - AdjustedMousePos()).Len() < 0.2) {
+				if((floors_[i].l_ - Mouse::I().WorldPos()).Len() < 0.2) {
 					grabbed_pt_ = &floors_[i].l_;
 					mode_ = MODE_MOVE_POINT;
-				} else if((floors_[i].r_ - AdjustedMousePos()).Len() < 0.2) {
+				} else if((floors_[i].r_ - Mouse::I().WorldPos()).Len() < 0.2) {
 					grabbed_pt_ = &floors_[i].r_;
 					mode_ = MODE_MOVE_POINT;
 				}
