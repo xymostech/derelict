@@ -49,17 +49,17 @@ Vector Mouse::WorldPos() {
 bool Mouse::Pressed(int button, int state) {
 	if(button < 3) {
 		bool final = true;
-		if(state == PRESSED) {
+		if(state & PRESSED) {
 			final &= mouse_button_[0][button];
 		}
-		if(state == RELEASED) {
+		if(state & RELEASED) {
 			final &= !mouse_button_[0][button];
 		}
-		if(state == HELD) {
+		if(state & HELD) {
 			final &= (mouse_button_[0][button] ==
 			          mouse_button_[1][button]);
 		}
-		if(state == EDGE) {
+		if(state & EDGE) {
 			final &= (mouse_button_[0][button] !=
 			          mouse_button_[1][button]);
 		}
