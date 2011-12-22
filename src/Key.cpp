@@ -59,12 +59,15 @@ bool Key::Pressed(int key, int flags) {
 
 	if(flags & PRESSED) {
 		pressed &= KeyCheck(0, special, key);
-	} else if(flags & RELEASED) {
+	}
+	if(flags & RELEASED) {
 		pressed &= !KeyCheck(0, special, key);
-	} else if(flags & HELD) {
+	}
+	if(flags & HELD) {
 		pressed &= (KeyCheck(0, special, key) ==
 		            KeyCheck(1, special, key));
-	} else if(flags & EDGE) {
+	}
+	if(flags & EDGE) {
 		pressed &= (KeyCheck(0, special, key) !=
 		            KeyCheck(1, special, key));
 	}

@@ -31,11 +31,21 @@ TEST(KeyState) {
 	CHECK(!Key::I().Pressed('A', Key::EDGE));
 	CHECK( Key::I().Pressed('A', Key::HELD));
 
+	CHECK(!Key::I().Pressed('A', Key::PRESSED  | Key::HELD));
+	CHECK(!Key::I().Pressed('A', Key::PRESSED  | Key::EDGE));
+	CHECK( Key::I().Pressed('A', Key::RELEASED | Key::HELD));
+	CHECK(!Key::I().Pressed('A', Key::RELEASED | Key::EDGE));
+
 	Key::KeyEvent('A', GLFW_PRESS);
 	CHECK( Key::I().Pressed('A', Key::PRESSED));
 	CHECK(!Key::I().Pressed('A', Key::RELEASED));
 	CHECK( Key::I().Pressed('A', Key::EDGE));
 	CHECK(!Key::I().Pressed('A', Key::HELD));
+
+	CHECK(!Key::I().Pressed('A', Key::PRESSED  | Key::HELD));
+	CHECK( Key::I().Pressed('A', Key::PRESSED  | Key::EDGE));
+	CHECK(!Key::I().Pressed('A', Key::RELEASED | Key::HELD));
+	CHECK(!Key::I().Pressed('A', Key::RELEASED | Key::EDGE));
 
 	Key::I().Update();
 	CHECK( Key::I().Pressed('A', Key::PRESSED));
@@ -43,11 +53,21 @@ TEST(KeyState) {
 	CHECK(!Key::I().Pressed('A', Key::EDGE));
 	CHECK( Key::I().Pressed('A', Key::HELD));
 
+	CHECK( Key::I().Pressed('A', Key::PRESSED  | Key::HELD));
+	CHECK(!Key::I().Pressed('A', Key::PRESSED  | Key::EDGE));
+	CHECK(!Key::I().Pressed('A', Key::RELEASED | Key::HELD));
+	CHECK(!Key::I().Pressed('A', Key::RELEASED | Key::EDGE));
+
 	Key::KeyEvent('A', GLFW_RELEASE);
 	CHECK(!Key::I().Pressed('A', Key::PRESSED));
 	CHECK( Key::I().Pressed('A', Key::RELEASED));
 	CHECK( Key::I().Pressed('A', Key::EDGE));
 	CHECK(!Key::I().Pressed('A', Key::HELD));
+
+	CHECK(!Key::I().Pressed('A', Key::PRESSED  | Key::HELD));
+	CHECK(!Key::I().Pressed('A', Key::PRESSED  | Key::EDGE));
+	CHECK(!Key::I().Pressed('A', Key::RELEASED | Key::HELD));
+	CHECK( Key::I().Pressed('A', Key::RELEASED | Key::EDGE));
 
 	Key::I().Update();
 }
