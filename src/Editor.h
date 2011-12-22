@@ -37,7 +37,6 @@ class Editor
 		MODE_MOVE_POINT,
 		MODE_PAN,
 		MODE_ADD_FLOOR_1,
-		MODE_ADD_FLOOR_WAIT,
 		MODE_ADD_FLOOR_2
 	} mode_;
 
