@@ -13,6 +13,7 @@
 #include <GL/glfw.h>
 
 #include "Floor.h"
+#include "Wall.h"
 
 #include "Mouse.h"
 #include "Key.h"
@@ -24,6 +25,7 @@ using std::vector;
 class Editor
 {
 	vector<Floor> floors_;
+	vector<Wall> walls_;
 
 	Vector* grabbed_pt_;
 
@@ -37,7 +39,9 @@ class Editor
 		MODE_MOVE_POINT,
 		MODE_PAN,
 		MODE_ADD_FLOOR_1,
-		MODE_ADD_FLOOR_2
+		MODE_ADD_FLOOR_2,
+		MODE_ADD_WALL_1,
+		MODE_ADD_WALL_2
 	} mode_;
 
 	void DrawHandle();

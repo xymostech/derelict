@@ -44,6 +44,12 @@ void Editor::Update() {
 				} else if((floors_[i].r_ - Mouse::I().WorldPos()).Len() < 0.2) {
 					grabbed_pt_ = &floors_[i].r_;
 					mode_ = MODE_MOVE_POINT;
+				} else if((walls_[i].b_ - Mouse::I().WorldPos()).Len() < 0.2) {
+					grabbed_pt_ = &walls_[i].b_;
+					mode_ = MODE_MOVE_POINT;
+				} else if((walls_[i].t_ - Mouse::I().WorldPos()).Len() < 0.2) {
+					grabbed_pt_ = &walls_[i].t_;
+					mode_ = MODE_MOVE_POINT;
 				}
 			}
 		} else if(Mouse::I().Pressed(1)) {
@@ -51,6 +57,8 @@ void Editor::Update() {
 			mode_ = MODE_PAN;
 		} else if(Key::I().Pressed('F')) {
 			mode_ = MODE_ADD_FLOOR_1;
+		} else if(Key::I().Pressed('W')) {
+			mode_ = MODE_ADD_WALL_1;
 		}
 	} else if(mode_ == MODE_MOVE_POINT) {
 		if(!Mouse::I().Pressed(0)) {
@@ -74,6 +82,16 @@ void Editor::Update() {
 			floors_.push_back(Floor(store_pt_, AdjustedMousePos()));
 			mode_ = MODE_NOTHING;
 		}
+	} else if(mode_ == MODE_ADD_WALL_1) {
+		if(Mouse::I().Pressed(0, Mouse::PRESSED | Mouse::EDGE)) {
+			store_pt_ = AdjustedMousePos();
+			mode_ = MODE_ADD_WALL_2;
+		}
+	} else if(mode_ == MODE_ADD_WALL_2) {
+		if(Mouse::I().Pressed(0, Mouse::PRESSED | Mouse::EDGE)) {
+			walls_.push_back(Wall(store_pt_, AdjustedMousePos()));
+			mode_ = MODE_NOTHING;
+		}
 	}
 }
 
@@ -91,6 +109,24 @@ void Editor::Draw() {
 		glPopMatrix();
 		glPushMatrix();
 			glTranslatef(floors_[i].r_.i, floors_[i].r_.j, 0);
+
+			glColor3f(0, 0, 0);
+
+			DrawHandle();
+		glPopMatrix();
+	}
+
+	for(size_t i=0; i<walls_.size(); ++i) {
+		walls_[i].Draw();
+		glPushMatrix();
+			glTranslatef(walls_[i].b_.i, walls_[i].b_.j, 0);
+
+			glColor3f(0, 0, 0);
+
+			DrawHandle();
+		glPopMatrix();
+		glPushMatrix();
+			glTranslatef(walls_[i].t_.i, walls_[i].t_.j, 0);
 
 			glColor3f(0, 0, 0);
 

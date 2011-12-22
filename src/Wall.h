@@ -23,6 +23,8 @@ public:
 	float Right();
 
 	void Draw();
+
+	friend class Editor;
 };
 
 #endif
