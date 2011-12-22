@@ -74,6 +74,7 @@ int main(int argc, char ** argv) {
 
 		Update();
 		Key::I().Update();
+		Mouse::I().Update();
 
 		glfwSwapBuffers();
 
