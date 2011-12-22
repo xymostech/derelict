@@ -42,6 +42,8 @@ class Editor
 	} mode_;
 
 	void DrawHandle();
+
+	Vector AdjustedMousePos();
 public:
 	Editor();
 

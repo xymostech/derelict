@@ -20,20 +20,34 @@ void Editor::DrawHandle() {
 	glEnd();
 }
 
+Vector Editor::AdjustedMousePos() {
+	if(Key::I().Pressed(GLFW_KEY_LSHIFT) ||
+	   Key::I().Pressed(GLFW_KEY_RSHIFT)) {
+		Vector new_pos = Mouse::I().WorldPos();
+
+		new_pos.i = floor(new_pos.i + 0.5);
+		new_pos.j = floor(new_pos.j + 0.5);
+
+		return new_pos;
+	} else {
+		return Mouse::I().WorldPos();
+	}
+}
+
 void Editor::Update() {
 	if(mode_ == MODE_NOTHING) {
 		if(Mouse::I().Pressed(0)) {
 			for(size_t i=0; i<floors_.size(); ++i) {
-				if((floors_[i].l_ - Mouse::I().WorldPos()).Len() < 0.2) {
+				if((floors_[i].l_ - AdjustedMousePos()).Len() < 0.2) {
 					grabbed_pt_ = &floors_[i].l_;
 					mode_ = MODE_MOVE_POINT;
-				} else if((floors_[i].r_ - Mouse::I().WorldPos()).Len() < 0.2) {
+				} else if((floors_[i].r_ - AdjustedMousePos()).Len() < 0.2) {
 					grabbed_pt_ = &floors_[i].r_;
 					mode_ = MODE_MOVE_POINT;
 				}
 			}
 		} else if(Mouse::I().Pressed(1)) {
-			pan_start_ = Mouse::I().WorldPos();
+			pan_start_ = AdjustedMousePos();
 			mode_ = MODE_PAN;
 		} else if(Key::I().Pressed('F')) {
 			mode_ = MODE_ADD_FLOOR_1;
@@ -42,17 +56,7 @@ void Editor::Update() {
 		if(!Mouse::I().Pressed(0)) {
 			mode_ = MODE_NOTHING;
 		} else {
-			if(Key::I().Pressed(GLFW_KEY_LSHIFT) ||
-			   Key::I().Pressed(GLFW_KEY_RSHIFT)) {
-				Vector new_pos = Mouse::I().WorldPos();
-
-				new_pos.i = floor(new_pos.i + 0.5);
-				new_pos.j = floor(new_pos.j + 0.5);
-
-				*grabbed_pt_ = new_pos;
-			} else {
-				*grabbed_pt_ = Mouse::I().WorldPos();
-			}
+			*grabbed_pt_ = AdjustedMousePos();
 		}
 	} else if(mode_ == MODE_PAN) {
 		if(!Mouse::I().Pressed(1)) {
@@ -62,12 +66,12 @@ void Editor::Update() {
 		}
 	} else if(mode_ == MODE_ADD_FLOOR_1) {
 		if(Mouse::I().Pressed(0, Mouse::PRESSED | Mouse::EDGE)) {
-			store_pt_ = Mouse::I().WorldPos();
-			mode_ = MODE_ADD_FLOOR_2
+			store_pt_ = AdjustedMousePos();
+			mode_ = MODE_ADD_FLOOR_2;
 		}
 	} else if(mode_ == MODE_ADD_FLOOR_2) {
 		if(Mouse::I().Pressed(0, Mouse::PRESSED | Mouse::EDGE)) {
-			floors_.push_back(Floor(store_pt_, Mouse::I().WorldPos()));
+			floors_.push_back(Floor(store_pt_, AdjustedMousePos()));
 			mode_ = MODE_NOTHING;
 		}
 	}
