@@ -46,7 +46,7 @@ Vector Mouse::WorldPos() {
 	return new_pos + screen_pos;
 }
 
-bool Mouse::Pressed(int button, State state) {
+bool Mouse::Pressed(int button, int state) {
 	if(button < 3) {
 		bool final = true;
 		if(state == PRESSED) {

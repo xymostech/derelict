@@ -39,7 +39,7 @@ public:
 		EDGE     = 0x08
 	};
 
-	bool Pressed(int button, State state = PRESSED);
+	bool Pressed(int button, int state = PRESSED);
 };
 
 #endif
