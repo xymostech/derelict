@@ -47,7 +47,7 @@ void Editor::Update() {
 				}
 			}
 		} else if(Mouse::I().Pressed(1)) {
-			pan_start_ = AdjustedMousePos();
+			pan_start_ = Mouse::I().WorldPos();
 			mode_ = MODE_PAN;
 		} else if(Key::I().Pressed('F')) {
 			mode_ = MODE_ADD_FLOOR_1;
