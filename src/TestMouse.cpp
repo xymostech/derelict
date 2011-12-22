@@ -14,6 +14,18 @@ TEST(MouseClick) {
 
 	CHECK(!Mouse::I().Pressed(0));
 	CHECK(!Mouse::I().Pressed(3));
+
+	Mouse::MouseButton(0, true);
+	Mouse::I().Update();
+	Mouse::MouseButton(0, false);
+
+	CHECK( Mouse::I().Pressed(0, Mouse::EDGE));
+	CHECK(!Mouse::I().Pressed(0, Mouse::HELD));
+
+	Mouse::I().Update();
+
+	CHECK(!Mouse::I().Pressed(0, Mouse::EDGE));
+	CHECK( Mouse::I().Pressed(0, Mouse::HELD));
 }
 
 TEST(MouseMove) {

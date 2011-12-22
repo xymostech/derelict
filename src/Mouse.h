@@ -16,7 +16,7 @@
 class Mouse
 {
 	Vector pos_;
-	bool mouse_button_[3];
+	bool mouse_button_[2][3];
 
 	Mouse();
 	Mouse(Mouse const&);
@@ -27,10 +27,19 @@ public:
 	static void GLFWCALL MouseMove(int x, int y);
 	static void GLFWCALL MouseButton(int button, int action);
 
+	void Update();
+	
 	Vector Pos();
 	Vector WorldPos();
 	
-	bool Pressed(int button);
+	enum State {
+		PRESSED  = 0x01,
+		RELEASED = 0x02,
+		HELD     = 0x04,
+		EDGE     = 0x08
+	};
+
+	bool Pressed(int button, State state = PRESSED);
 };
 
 #endif

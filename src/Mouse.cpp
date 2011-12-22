@@ -16,8 +16,12 @@ void GLFWCALL Mouse::MouseMove(int x, int y) {
 
 void GLFWCALL Mouse::MouseButton(int button, int action) {
 	if(button < 3) {
-		I().mouse_button_[button] = action;
+		I().mouse_button_[0][button] = action;
 	}
+}
+
+void Mouse::Update() {
+	memcpy(mouse_button_[1], mouse_button_[0], 3*sizeof(bool));
 }
 
 Vector Mouse::Pos() {
@@ -42,9 +46,24 @@ Vector Mouse::WorldPos() {
 	return new_pos + screen_pos;
 }
 
-bool Mouse::Pressed(int button) {
+bool Mouse::Pressed(int button, State state) {
 	if(button < 3) {
-		return mouse_button_[button];
+		bool final = true;
+		if(state == PRESSED) {
+			final &= mouse_button_[0][button];
+		}
+		if(state == RELEASED) {
+			final &= !mouse_button_[0][button];
+		}
+		if(state == HELD) {
+			final &= (mouse_button_[0][button] ==
+			          mouse_button_[1][button]);
+		}
+		if(state == EDGE) {
+			final &= (mouse_button_[0][button] !=
+			          mouse_button_[1][button]);
+		}
+		return final;
 	} else {
 		return false;
 	}
