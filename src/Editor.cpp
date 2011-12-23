@@ -48,7 +48,9 @@ void Editor::Update() {
 				} else if((floors_[i].r_ - Mouse::I().WorldPos()).Len() < 0.2) {
 					grabbed_pt_ = &floors_[i].r_;
 					mode_ = MODE_MOVE_POINT;
-				} else if((walls_[i].b_ - Mouse::I().WorldPos()).Len() < 0.2) {
+				}			}
+			for(size_t i=0; i<walls_.size(); ++i) {
+				if((walls_[i].b_ - Mouse::I().WorldPos()).Len() < 0.2) {
 					grabbed_pt_ = &walls_[i].b_;
 					mode_ = MODE_MOVE_POINT;
 				} else if((walls_[i].t_ - Mouse::I().WorldPos()).Len() < 0.2) {
