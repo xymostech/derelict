@@ -44,7 +44,7 @@ class Editor
 		MODE_ADD_WALL_2
 	} mode_;
 
-	void DrawHandle();
+	void DrawHandle(Vector pos);
 
 	Vector AdjustedMousePos();
 public:

@@ -6,18 +6,22 @@ Editor::Editor() {
 	floors_.push_back(Floor(Vector(0, 0), Vector(3, 0)));
 }
 
-void Editor::DrawHandle() {
-	glBegin(GL_POLYGON);
-		for(float ang = 0; ang < 2*M_PI; ang += M_PI/8) {
-			glVertex2f(0.03 * cos(ang), 0.03 * sin(ang));
-		}
-	glEnd();
+void Editor::DrawHandle(Vector pos) {
+	glPushMatrix();
+		glTranslatef(pos.i, pos.j, 0);
 
-	glBegin(GL_LINE_LOOP);
-		for(float ang = 0; ang < 2*M_PI; ang += M_PI/8) {
-			glVertex2f(0.2 * cos(ang), 0.2 * sin(ang));
-		}
-	glEnd();
+		glBegin(GL_POLYGON);
+			for(float ang = 0; ang < 2*M_PI; ang += M_PI/8) {
+				glVertex2f(0.03 * cos(ang), 0.03 * sin(ang));
+			}
+		glEnd();
+
+		glBegin(GL_LINE_LOOP);
+			for(float ang = 0; ang < 2*M_PI; ang += M_PI/8) {
+				glVertex2f(0.2 * cos(ang), 0.2 * sin(ang));
+			}
+		glEnd();
+	glPopMatrix();
 }
 
 Vector Editor::AdjustedMousePos() {
@@ -100,37 +104,13 @@ void Editor::Draw() {
 
 	for(size_t i=0; i<floors_.size(); ++i) {
 		floors_[i].Draw();
-		glPushMatrix();
-			glTranslatef(floors_[i].l_.i, floors_[i].l_.j, 0);
-
-			glColor3f(0, 0, 0);
-
-			DrawHandle();
-		glPopMatrix();
-		glPushMatrix();
-			glTranslatef(floors_[i].r_.i, floors_[i].r_.j, 0);
-
-			glColor3f(0, 0, 0);
-
-			DrawHandle();
-		glPopMatrix();
+		DrawHandle(floors_[i].l_);
+		DrawHandle(floors_[i].r_);
 	}
 
 	for(size_t i=0; i<walls_.size(); ++i) {
 		walls_[i].Draw();
-		glPushMatrix();
-			glTranslatef(walls_[i].b_.i, walls_[i].b_.j, 0);
-
-			glColor3f(0, 0, 0);
-
-			DrawHandle();
-		glPopMatrix();
-		glPushMatrix();
-			glTranslatef(walls_[i].t_.i, walls_[i].t_.j, 0);
-
-			glColor3f(0, 0, 0);
-
-			DrawHandle();
-		glPopMatrix();
+		DrawHandle(walls_[i].b_);
+		DrawHandle(walls_[i].t_);
 	}
 }
