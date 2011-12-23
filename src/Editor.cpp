@@ -115,4 +115,16 @@ void Editor::Draw() {
 		DrawHandle(walls_[i].b_);
 		DrawHandle(walls_[i].t_);
 	}
+
+	if(mode_ == MODE_ADD_FLOOR_1) {
+		DrawHandle(AdjustedMousePos());
+	} else if(mode_ == MODE_ADD_FLOOR_2) {
+		Floor(store_pt_, AdjustedMousePos()).Draw();
+		DrawHandle(AdjustedMousePos());
+	} else if(mode_ == MODE_ADD_WALL_1) {
+		DrawHandle(AdjustedMousePos());
+	} else if(mode_ == MODE_ADD_WALL_2) {
+		Wall(store_pt_, AdjustedMousePos()).Draw();
+		DrawHandle(AdjustedMousePos());
+	}
 }
