@@ -23,6 +23,7 @@ SOURCES       = Cam.cpp\
 	        Vector.cpp\
 	        Wall.cpp\
 	        World.cpp\
+	        WorldObject.cpp\
 	        main.cpp\
 		Editmain.cpp\
 		Editor.cpp\
@@ -43,6 +44,7 @@ HEADERS       = Cam.h\
 	        Vector.h\
 	        Wall.h\
 	        World.h\
+	        WorldObject.h\
 	        Editor.h
 COMMONOBJECTS = Cam.o\
 		DisplayFuncs.o\
@@ -52,7 +54,8 @@ COMMONOBJECTS = Cam.o\
 		Player.o\
 		Vector.o\
 		Wall.o\
-		World.o
+		World.o\
+		WorldObject.o
 MAINOBJECTS   = main.o
 EDITOBJECTS   = Editmain.o\
 		Editor.o
