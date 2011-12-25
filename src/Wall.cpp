@@ -28,6 +28,6 @@ void Wall::Draw() {
 
 	glBegin(GL_LINES);
 		glVertex2f(b_.i, b_.j);
-		glVertex2f(t_.i, t_.j);
+		glVertex2f(b_.i, t_.j);
 	glEnd();
 }
