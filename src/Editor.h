@@ -28,7 +28,8 @@ class Editor
 {
 	vector<WorldObject*> objects_;
 
-	Vector* grabbed_pt_;
+	WorldObject* held_obj;
+	int          held_pt;
 
 	Vector cam_pos_;
 	Vector pan_start_;

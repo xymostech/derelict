@@ -42,7 +42,8 @@ void Editor::Update() {
 			for(size_t i=0; i<objects_.size()&&mode_==MODE_NOTHING; ++i) {
 				for(size_t p=0; p<objects_[i]->NumPoints(); ++p) {
 					if((objects_[i]->Point(p) - Mouse::I().WorldPos()).Len() < 0.2) {
-						grabbed_pt_ = &objects_[i]->Point(p);
+						held_obj = objects_[i];
+						held_pt  = p;
 						mode_ = MODE_MOVE_POINT;
 						break;
 					}
@@ -60,7 +61,7 @@ void Editor::Update() {
 		if(!Mouse::I().Pressed(0)) {
 			mode_ = MODE_NOTHING;
 		} else {
-			*grabbed_pt_ = AdjustedMousePos();
+			held_obj->Point(held_pt) = AdjustedMousePos();
 		}
 	} else if(mode_ == MODE_PAN) {
 		if(!Mouse::I().Pressed(1)) {
