@@ -30,6 +30,7 @@ public:
 
 	Vector& Point(int i);
 	void AddPoint(const Vector& pt);
+	size_t NumPoints();
 
 	Type GetType();
 };
