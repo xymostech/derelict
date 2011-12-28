@@ -101,6 +101,7 @@ void Editor::Draw() {
 		}
 	}
 
+	glColor3f(0, 0, 0);
 
 	if(mode_ == MODE_ADD_FLOOR_1) {
 		DrawHandle(AdjustedMousePos());
