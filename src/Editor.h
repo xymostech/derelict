@@ -12,6 +12,8 @@
 #include <vector>
 #include <GL/glfw.h>
 
+#include "WorldObject.h"
+
 #include "Floor.h"
 #include "Wall.h"
 
@@ -24,8 +26,7 @@ using std::vector;
 
 class Editor
 {
-	vector<Floor> floors_;
-	vector<Wall> walls_;
+	vector<WorldObject*> objects_;
 
 	Vector* grabbed_pt_;
 

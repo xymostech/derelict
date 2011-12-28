@@ -2,8 +2,6 @@
 
 Editor::Editor() {
 	mode_ = MODE_NOTHING;
-
-	floors_.push_back(Floor(Vector(0, 0), Vector(3, 0)));
 }
 
 void Editor::DrawHandle(Vector pos) {
@@ -41,21 +39,13 @@ Vector Editor::AdjustedMousePos() {
 void Editor::Update() {
 	if(mode_ == MODE_NOTHING) {
 		if(Mouse::I().Pressed(0)) {
-			for(size_t i=0; i<floors_.size(); ++i) {
-				if((floors_[i].Point(0) - Mouse::I().WorldPos()).Len() < 0.2) {
-					grabbed_pt_ = &floors_[i].Point(0);
-					mode_ = MODE_MOVE_POINT;
-				} else if((floors_[i].Point(1) - Mouse::I().WorldPos()).Len() < 0.2) {
-					grabbed_pt_ = &floors_[i].Point(1);
-					mode_ = MODE_MOVE_POINT;
-				}			}
-			for(size_t i=0; i<walls_.size(); ++i) {
-				if((walls_[i].Point(0) - Mouse::I().WorldPos()).Len() < 0.2) {
-					grabbed_pt_ = &walls_[i].Point(0);
-					mode_ = MODE_MOVE_POINT;
-				} else if((walls_[i].Point(1) - Mouse::I().WorldPos()).Len() < 0.2) {
-					grabbed_pt_ = &walls_[i].Point(1);
-					mode_ = MODE_MOVE_POINT;
+			for(size_t i=0; i<objects_.size()&&mode_==MODE_NOTHING; ++i) {
+				for(size_t p=0; p<objects_[i]->NumPoints(); ++p) {
+					if((objects_[i]->Point(p) - Mouse::I().WorldPos()).Len() < 0.2) {
+						grabbed_pt_ = &objects_[i]->Point(p);
+						mode_ = MODE_MOVE_POINT;
+						break;
+					}
 				}
 			}
 		} else if(Mouse::I().Pressed(1)) {
@@ -85,7 +75,7 @@ void Editor::Update() {
 		}
 	} else if(mode_ == MODE_ADD_FLOOR_2) {
 		if(Mouse::I().Pressed(0, Mouse::PRESSED | Mouse::EDGE)) {
-			floors_.push_back(Floor(store_pt_, AdjustedMousePos()));
+			objects_.push_back(new Floor(store_pt_, AdjustedMousePos()));
 			mode_ = MODE_NOTHING;
 		}
 	} else if(mode_ == MODE_ADD_WALL_1) {
@@ -95,7 +85,7 @@ void Editor::Update() {
 		}
 	} else if(mode_ == MODE_ADD_WALL_2) {
 		if(Mouse::I().Pressed(0, Mouse::PRESSED | Mouse::EDGE)) {
-			walls_.push_back(Wall(store_pt_, AdjustedMousePos()));
+			objects_.push_back(new Wall(store_pt_, AdjustedMousePos()));
 			mode_ = MODE_NOTHING;
 		}
 	}
@@ -104,17 +94,13 @@ void Editor::Update() {
 void Editor::Draw() {
 	Cam::I().SetPos(cam_pos_);
 
-	for(size_t i=0; i<floors_.size(); ++i) {
-		floors_[i].Draw();
-		DrawHandle(floors_[i].Point(0));
-		DrawHandle(floors_[i].Point(1));
+	for(size_t i=0; i<objects_.size(); ++i) {
+		objects_[i]->Draw();
+		for(size_t p=0; p<objects_[i]->NumPoints(); ++p) {
+			DrawHandle(objects_[i]->Point(p));
+		}
 	}
 
-	for(size_t i=0; i<walls_.size(); ++i) {
-		walls_[i].Draw();
-		DrawHandle(walls_[i].Point(0));
-		DrawHandle(walls_[i].Point(1));
-	}
 
 	if(mode_ == MODE_ADD_FLOOR_1) {
 		DrawHandle(AdjustedMousePos());
