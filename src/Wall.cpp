@@ -33,6 +33,12 @@ void Wall::Draw() {
 }
 
 void Wall::Update() {
-	
+	if(Point(0).j > Point(1).j) {
+		Vector hold = Point(0);
+		Point(0) = Point(1);
+		Point(1) = hold;
+	}
+
+	Point(1).i = Point(0).i;
 }
 

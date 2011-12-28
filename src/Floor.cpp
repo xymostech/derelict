@@ -33,5 +33,9 @@ void Floor::Draw() {
 }
 
 void Floor::Update() {
-
+	if(Point(0).i > Point(1).i) {
+		Vector hold = Point(0);
+		Point(0) = Point(1);
+		Point(1) = hold;
+	}
 }
