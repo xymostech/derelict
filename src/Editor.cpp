@@ -60,6 +60,7 @@ void Editor::Update() {
 	} else if(mode_ == MODE_MOVE_POINT) {
 		if(!Mouse::I().Pressed(0)) {
 			mode_ = MODE_NOTHING;
+			held_obj->Update();
 		} else {
 			held_obj->Point(held_pt) = AdjustedMousePos();
 		}
@@ -76,7 +77,9 @@ void Editor::Update() {
 		}
 	} else if(mode_ == MODE_ADD_FLOOR_2) {
 		if(Mouse::I().Pressed(0, Mouse::PRESSED | Mouse::EDGE)) {
-			objects_.push_back(new Floor(store_pt_, AdjustedMousePos()));
+			WorldObject* new_obj = new Floor(store_pt_, AdjustedMousePos());
+			new_obj->Update();
+			objects_.push_back(new_obj);
 			mode_ = MODE_NOTHING;
 		}
 	} else if(mode_ == MODE_ADD_WALL_1) {
@@ -86,7 +89,9 @@ void Editor::Update() {
 		}
 	} else if(mode_ == MODE_ADD_WALL_2) {
 		if(Mouse::I().Pressed(0, Mouse::PRESSED | Mouse::EDGE)) {
-			objects_.push_back(new Wall(store_pt_, AdjustedMousePos()));
+			WorldObject* new_obj = new Wall(store_pt_, AdjustedMousePos());
+			new_obj->Update();
+			objects_.push_back(new_obj);
 			mode_ = MODE_NOTHING;
 		}
 	}
