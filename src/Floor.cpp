@@ -1,13 +1,11 @@
 #include "Floor.h"
 
 Floor::Floor(Vector l, Vector r) :
-	WorldObject(WorldObject::FLOOR),
-	diff_(r-l),
-	m_((r.j-l.j)/(r.i-l.i)),
-	b_(l.j-m_*l.i)
+	WorldObject(WorldObject::FLOOR)
 {
 	AddPoint(l);
 	AddPoint(r);
+	Update();
 }
 
 bool Floor::Below(Vector p) {
@@ -38,4 +36,8 @@ void Floor::Update() {
 		Point(0) = Point(1);
 		Point(1) = hold;
 	}
+
+	diff_ = Point(1)-Point(0);
+	m_ = (Point(1).j-Point(0).j)/(Point(1).i-Point(0).i);
+	b_ = Point(0).j-m_*Point(0).i;
 }
