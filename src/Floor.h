@@ -10,10 +10,13 @@
 
 #include <GL/glfw.h>
 
+#include "WorldObject.h"
+
 #include "Vector.h"
 
-class Floor {
-	Vector l_, r_, diff_;
+class Floor : public WorldObject
+{
+	Vector diff_;
 
 	float m_, b_;
 public:
@@ -24,6 +27,7 @@ public:
 	float SurfacePoint(float x);
 
 	void Draw();
+	void Update();
 
 	friend class Editor;
 };

@@ -42,11 +42,11 @@ void Editor::Update() {
 	if(mode_ == MODE_NOTHING) {
 		if(Mouse::I().Pressed(0)) {
 			for(size_t i=0; i<floors_.size(); ++i) {
-				if((floors_[i].l_ - Mouse::I().WorldPos()).Len() < 0.2) {
-					grabbed_pt_ = &floors_[i].l_;
+				if((floors_[i].Point(0) - Mouse::I().WorldPos()).Len() < 0.2) {
+					grabbed_pt_ = &floors_[i].Point(0);
 					mode_ = MODE_MOVE_POINT;
-				} else if((floors_[i].r_ - Mouse::I().WorldPos()).Len() < 0.2) {
-					grabbed_pt_ = &floors_[i].r_;
+				} else if((floors_[i].Point(1) - Mouse::I().WorldPos()).Len() < 0.2) {
+					grabbed_pt_ = &floors_[i].Point(1);
 					mode_ = MODE_MOVE_POINT;
 				}			}
 			for(size_t i=0; i<walls_.size(); ++i) {
@@ -106,8 +106,8 @@ void Editor::Draw() {
 
 	for(size_t i=0; i<floors_.size(); ++i) {
 		floors_[i].Draw();
-		DrawHandle(floors_[i].l_);
-		DrawHandle(floors_[i].r_);
+		DrawHandle(floors_[i].Point(0));
+		DrawHandle(floors_[i].Point(1));
 	}
 
 	for(size_t i=0; i<walls_.size(); ++i) {
