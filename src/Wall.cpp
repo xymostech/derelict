@@ -1,33 +1,38 @@
 #include "Wall.h"
 
 Wall::Wall(Vector b, Vector t) :
-	b_(b),
-	t_(t)
+	WorldObject(WorldObject::WALL)
 {
-	
+	AddPoint(b);
+	AddPoint(t);
 }
 
 bool Wall::OnLeft(Vector p) {
-	return (p.i < b_.i);
+	return (p.i < Point(0).i);
 }
 
 bool Wall::Between(Vector p) {
-	return (p.j < t_.j) && (p.j > b_.j);
+	return (p.j < Point(1).j) && (p.j > Point(0).j);
 }
 
 float Wall::Left() {
-	return b_.i - 0.1;
+	return Point(0).i - 0.1;
 }
 
 float Wall::Right() {
-	return b_.i + 0.1;
+	return Point(0).i + 0.1;
 }
 
 void Wall::Draw() {
 	glColor3f(0, 0, 0);
 
 	glBegin(GL_LINES);
-		glVertex2f(b_.i, b_.j);
-		glVertex2f(b_.i, t_.j);
+		glVertex2f(Point(0).i, Point(0).j);
+		glVertex2f(Point(0).i, Point(1).j);
 	glEnd();
 }
+
+void Wall::Update() {
+	
+}
+

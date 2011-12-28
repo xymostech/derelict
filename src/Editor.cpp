@@ -50,11 +50,11 @@ void Editor::Update() {
 					mode_ = MODE_MOVE_POINT;
 				}			}
 			for(size_t i=0; i<walls_.size(); ++i) {
-				if((walls_[i].b_ - Mouse::I().WorldPos()).Len() < 0.2) {
-					grabbed_pt_ = &walls_[i].b_;
+				if((walls_[i].Point(0) - Mouse::I().WorldPos()).Len() < 0.2) {
+					grabbed_pt_ = &walls_[i].Point(0);
 					mode_ = MODE_MOVE_POINT;
-				} else if((walls_[i].t_ - Mouse::I().WorldPos()).Len() < 0.2) {
-					grabbed_pt_ = &walls_[i].t_;
+				} else if((walls_[i].Point(1) - Mouse::I().WorldPos()).Len() < 0.2) {
+					grabbed_pt_ = &walls_[i].Point(1);
 					mode_ = MODE_MOVE_POINT;
 				}
 			}
@@ -112,8 +112,8 @@ void Editor::Draw() {
 
 	for(size_t i=0; i<walls_.size(); ++i) {
 		walls_[i].Draw();
-		DrawHandle(walls_[i].b_);
-		DrawHandle(walls_[i].t_);
+		DrawHandle(walls_[i].Point(0));
+		DrawHandle(walls_[i].Point(1));
 	}
 
 	if(mode_ == MODE_ADD_FLOOR_1) {

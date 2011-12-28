@@ -8,11 +8,12 @@
 
 #include <GL/glfw.h>
 
+#include "WorldObject.h"
+
 #include "Vector.h"
 
-class Wall
+class Wall : public WorldObject
 {
-	Vector b_, t_;
 public:
 	Wall(Vector b, Vector t);
 
@@ -23,6 +24,7 @@ public:
 	float Right();
 
 	void Draw();
+	void Update();
 
 	friend class Editor;
 };
