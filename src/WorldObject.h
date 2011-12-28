@@ -29,6 +29,7 @@ public:
 	virtual void Update() = 0;
 
 	Vector& Point(int i);
+	void AddPoint(const Vector& pt);
 
 	Type GetType();
 };
