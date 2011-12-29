@@ -4,6 +4,12 @@ Player::Player() {
 	
 }
 
+void Player::SetPos(const Vector& pos) {
+	pos_ = pos;
+	vel_ = Vector();
+	on_ground_ = false;
+}
+
 Vector Player::GetPos() {
 	return pos_;
 }

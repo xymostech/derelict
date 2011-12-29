@@ -17,6 +17,7 @@ class Player {
 public:
 	Player();
 
+	void   SetPos(const Vector& pos);
 	Vector GetPos();
 
 	void Jump();
