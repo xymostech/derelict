@@ -24,8 +24,6 @@ void Init() {
 void Display() {
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 
-	Cam::I().SetPos(Vector(0, 0));
-
 	e.Draw();
 }
 

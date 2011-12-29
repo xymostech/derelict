@@ -33,6 +33,7 @@ class Editor : public World
 
 	enum Mode {
 		MODE_NOTHING,
+		MODE_TEST,
 		MODE_MOVE_POINT,
 		MODE_PAN,
 		MODE_ADD_FLOOR_1,

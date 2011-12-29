@@ -56,6 +56,14 @@ void Editor::Update() {
 			mode_ = MODE_ADD_FLOOR_1;
 		} else if(Key::I().Pressed('W')) {
 			mode_ = MODE_ADD_WALL_1;
+		} else if(Key::I().Pressed(GLFW_KEY_ENTER, Key::PRESSED | Key::EDGE)) {
+			mode_ = MODE_TEST;
+			p_.SetPos(cam_pos_);
+		}
+	} else if(mode_ == MODE_TEST) {
+		World::Update();
+		if(Key::I().Pressed(GLFW_KEY_ENTER, Key::PRESSED | Key::EDGE)) {
+			mode_ = MODE_NOTHING;
 		}
 	} else if(mode_ == MODE_MOVE_POINT) {
 		if(!Mouse::I().Pressed(0)) {
@@ -98,26 +106,30 @@ void Editor::Update() {
 }
 
 void Editor::Draw() {
-	Cam::I().SetPos(cam_pos_);
+	if(mode_ == MODE_TEST) {
+		World::Draw();
+	} else {
+		Cam::I().SetPos(cam_pos_);
 
-	for(size_t i=0; i<objects_.size(); ++i) {
-		objects_[i]->Draw();
-		for(size_t p=0; p<objects_[i]->NumPoints(); ++p) {
-			DrawHandle(objects_[i]->Point(p));
+		for(size_t i=0; i<objects_.size(); ++i) {
+			objects_[i]->Draw();
+			for(size_t p=0; p<objects_[i]->NumPoints(); ++p) {
+				DrawHandle(objects_[i]->Point(p));
+			}
 		}
-	}
 
-	glColor3f(0, 0, 0);
+		glColor3f(0, 0, 0);
 
-	if(mode_ == MODE_ADD_FLOOR_1) {
-		DrawHandle(AdjustedMousePos());
-	} else if(mode_ == MODE_ADD_FLOOR_2) {
-		Floor(store_pt_, AdjustedMousePos()).Draw();
-		DrawHandle(AdjustedMousePos());
-	} else if(mode_ == MODE_ADD_WALL_1) {
-		DrawHandle(AdjustedMousePos());
-	} else if(mode_ == MODE_ADD_WALL_2) {
-		Wall(store_pt_, AdjustedMousePos()).Draw();
-		DrawHandle(AdjustedMousePos());
+		if(mode_ == MODE_ADD_FLOOR_1) {
+			DrawHandle(AdjustedMousePos());
+		} else if(mode_ == MODE_ADD_FLOOR_2) {
+			Floor(store_pt_, AdjustedMousePos()).Draw();
+			DrawHandle(AdjustedMousePos());
+		} else if(mode_ == MODE_ADD_WALL_1) {
+			DrawHandle(AdjustedMousePos());
+		} else if(mode_ == MODE_ADD_WALL_2) {
+			Wall(store_pt_, AdjustedMousePos()).Draw();
+			DrawHandle(AdjustedMousePos());
+		}
 	}
 }
