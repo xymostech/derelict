@@ -21,6 +21,7 @@ using std::fstream;
 #include "Player.h"
 
 class World {
+protected:
 	vector<WorldObject*> objects_;
 
 	Player p_;
@@ -31,9 +32,8 @@ public:
 
 	void Load(string file);
 
-	void Update();
-
-	void Draw();
+	virtual void Update();
+	virtual void Draw();
 };
 
 #endif

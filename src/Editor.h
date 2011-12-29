@@ -12,10 +12,7 @@
 #include <vector>
 #include <GL/glfw.h>
 
-#include "WorldObject.h"
-
-#include "Floor.h"
-#include "Wall.h"
+#include "World.h"
 
 #include "Mouse.h"
 #include "Key.h"
@@ -24,10 +21,8 @@
 
 using std::vector;
 
-class Editor
+class Editor : public World
 {
-	vector<WorldObject*> objects_;
-
 	WorldObject* held_obj;
 	int          held_pt;
 
