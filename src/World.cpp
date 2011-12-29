@@ -4,12 +4,8 @@ World::World() {
 
 }
 
-void World::AddFloor(Floor f) {
-	floors_.push_back(f);
-}
-
-void World::AddWall(Wall w) {
-	walls_.push_back(w);
+void World::AddObject(WorldObject* obj) {
+	objects_.push_back(obj);
 }
 
 void World::Load(string file) {
@@ -25,14 +21,14 @@ void World::Load(string file) {
 			float x1, y1, x2, y2;
 			f >> x1 >> y1 >> x2 >> y2;
 
-			AddFloor(Floor(Vector(x1, y1),
-			               Vector(x2, y2)));
+			AddObject(new Floor(Vector(x1, y1),
+			                    Vector(x2, y2)));
 		} else if(type == "wall") {
 			float x1, y1, x2, y2;
 			f >> x1 >> y1 >> x2 >> y2;
 
-			AddWall(Wall(Vector(x1, y1),
-			             Vector(x2, y2)));
+			AddObject(new Wall(Vector(x1, y1),
+			                   Vector(x2, y2)));
 		}
 	}
 }
@@ -42,14 +38,16 @@ void World::Update() {
 
 	p_.BeginUpdate();
 
-	vector<Floor>::iterator floor_it, floor_end = floors_.end();
-	for(floor_it=floors_.begin(); floor_it!=floor_end; ++floor_it) {
-		p_.HandleFloor(*floor_it);
-	}
-
-	vector<Wall>::iterator wall_it, wall_end = walls_.end();
-	for(wall_it=walls_.begin(); wall_it!=wall_end; ++wall_it) {
-		p_.HandleWall(*wall_it);
+	vector<WorldObject*>::iterator object_it, object_end = objects_.end();
+	for(object_it=objects_.begin(); object_it!=object_end; ++object_it) {
+		switch((*object_it)->GetType()) {
+			case WorldObject::FLOOR:
+				p_.HandleFloor(*(Floor*)*object_it);
+				break;
+			case WorldObject::WALL:
+				p_.HandleWall(*(Wall*)*object_it);
+				break;
+		}
 	}
 
 	p_.EndUpdate();
@@ -58,14 +56,9 @@ void World::Update() {
 }
 
 void World::Draw() {
-	vector<Floor>::iterator floor_it, floor_end = floors_.end();
-	for(floor_it=floors_.begin(); floor_it!=floor_end; ++floor_it) {
-		floor_it->Draw();
-	}
-
-	vector<Wall>::iterator wall_it, wall_end = walls_.end();
-	for(wall_it=walls_.begin(); wall_it!=wall_end; ++wall_it) {
-		wall_it->Draw();
+	vector<WorldObject*>::iterator object_it, object_end = objects_.end();
+	for(object_it=objects_.begin(); object_it!=object_end; ++object_it) {
+		(*object_it)->Draw();
 	}
 
 	p_.Draw();

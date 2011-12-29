@@ -15,20 +15,19 @@ using std::vector;
 using std::string;
 using std::fstream;
 
+#include "WorldObject.h"
 #include "Floor.h"
 #include "Wall.h"
 #include "Player.h"
 
 class World {
-	vector<Floor> floors_;
-	vector<Wall> walls_;
+	vector<WorldObject*> objects_;
 
 	Player p_;
 public:
 	World();
 
-	void AddFloor(Floor f);
-	void AddWall(Wall w);
+	void AddObject(WorldObject* obj);
 
 	void Load(string file);
 
